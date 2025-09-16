@@ -1,0 +1,15 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IT13_FinalProject.MainPage"
+             Title="Main Dashboard">
+
+    <VerticalStackLayout Padding="30" Spacing="15">
+        <Label Text="Welcome to LuxeSpa CRM"
+               FontSize="24"
+               HorizontalOptions="Center" />
+
+        <Label Text="This is the main dashboard (you can turn this into Admin or Staff page)."
+               FontSize="16"
+               HorizontalOptions="Center" />
+    </VerticalStackLayout>
+</ContentPage>

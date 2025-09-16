@@ -1,0 +1,79 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IT13_FinalProject.AdminPage"
+             BackgroundColor="#1e2445">
+
+    <!-- Grid with 2 columns -->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/>
+            <!-- Sidebar fixed width -->
+            <ColumnDefinition Width="*"/>
+            <!-- Main content takes the rest -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar -->
+        <Grid Grid.Column="0"
+              x:Name="Sidebar"
+              WidthRequest="40">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#1a1f3c" Offset="0.0"/>
+                    <GradientStop Color="#151934" Offset="1.0"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <VerticalStackLayout Padding="20" Spacing="20">
+                <!-- Toggle Button -->
+                <Button x:Name="SidebarToggleButton"
+                        Text="☰"
+                        BackgroundColor="Transparent"
+                        TextColor="White"
+                        Clicked="OnSidebarToggleClicked"
+                        HeightRequest="40" WidthRequest="40"/>
+                <!-- Logo and Label -->
+                <HorizontalStackLayout Spacing="10">
+                    <Frame BackgroundColor="#ff69b4"
+                           HeightRequest="40" WidthRequest="40"
+                           CornerRadius="10" HasShadow="False">
+                        <Image Source="logo.png" HeightRequest="24"/>
+                    </Frame>
+                    <Label Text="LuxeSpa" FontAttributes="Bold" FontSize="20" TextColor="White" IsVisible="{Binding SidebarLabelVisible}"/>
+                </HorizontalStackLayout>
+
+                <!-- Admin Info -->
+                <Frame BackgroundColor="#00000020" Padding="10" CornerRadius="12">
+                    <HorizontalStackLayout Spacing="10">
+                        <Image Source="admin.png" HeightRequest="40" WidthRequest="40" Aspect="AspectFill"/>
+                        <VerticalStackLayout>
+                            <Label Text="Sarah Johnson" TextColor="White" FontSize="14"/>
+                            <Label Text="Admin Manager" TextColor="#ccc" FontSize="12"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </Frame>
+
+                <!-- Navigation -->
+                <ScrollView>
+                    <VerticalStackLayout Spacing="5">
+                        <Button Text="Dashboard" BackgroundColor="#ff69b420" TextColor="White" CornerRadius="8" Clicked="OnDashboardClicked"/>
+                        <Button Text="Customers" BackgroundColor="Transparent" TextColor="#ccc" Clicked="OnCustomersClicked"/>
+                        <Button Text="Staff" BackgroundColor="Transparent" TextColor="#ccc" Clicked="OnStaffClicked"/>
+                        <Button Text="Services" BackgroundColor="Transparent" TextColor="#ccc" Clicked="OnServicesClicked"/>
+                        <Button Text="Appointments" BackgroundColor="Transparent" TextColor="#ccc" Clicked="OnAppointmentsClicked"/>
+                        <Button Text="Payments" BackgroundColor="Transparent" TextColor="#ccc" Clicked="OnPaymentsClicked"/>
+                        <Button Text="Reports" BackgroundColor="Transparent" TextColor="#ccc" Clicked="OnReportsClicked"/>
+                        <Button Text="Settings" BackgroundColor="Transparent" TextColor="#ccc" Clicked="OnSettingsClicked"/>
+                    </VerticalStackLayout>
+                </ScrollView>
+            </VerticalStackLayout>
+        </Grid>
+
+        <!-- Main Content -->
+        <Grid Grid.Column="1" BackgroundColor="#0a192f">
+            <Label Text="This is the Admin Dashboard"
+                   TextColor="White"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   FontSize="24"/>
+        </Grid>
+    </Grid>
+</ContentPage>

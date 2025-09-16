@@ -1,0 +1,104 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IT13_FinalProject.LoginPage"
+             BackgroundColor="#0A192F"
+             Title="LuxeSpa - Login">
+
+    <Grid ColumnDefinitions="*,*">
+        <!-- Left Side - Branding -->
+        <Grid BackgroundColor="#0A192F"
+              Padding="40"
+              Column="0">
+            <VerticalStackLayout Spacing="20"
+                                 VerticalOptions="Center"
+                                 HorizontalOptions="Center">
+                <Label Text="LuxeSpa"
+                       FontSize="48"
+                       FontFamily="Pacifico"
+                       TextColor="White"
+                       HorizontalOptions="Center" />
+                <BoxView HeightRequest="2"
+                         WidthRequest="80"
+                         Color="#FF4B91"
+                         HorizontalOptions="Center" />
+                <Label Text="CRM System"
+                       FontSize="28"
+                       TextColor="White"
+                       HorizontalOptions="Center" />
+                <Label Text="Your wellness, managed with ease"
+                       FontSize="16"
+                       TextColor="LightGray"
+                       HorizontalOptions="Center" />
+
+                <Label Text="&quot;LuxeSpa CRM has transformed how we manage our wellness center. The intuitive interface and powerful features make client management effortless.&quot;"
+                       FontSize="14"
+                       TextColor="WhiteSmoke"
+                       FontAttributes="Italic"
+                       HorizontalTextAlignment="Center"
+                       Margin="0,40,0,0" />
+            </VerticalStackLayout>
+        </Grid>
+
+        <!-- Right Side - Login Form -->
+        <Grid BackgroundColor="#1E293B"
+              Padding="40"
+              Column="1"
+              VerticalOptions="Center">
+            <Frame CornerRadius="20"
+                   Padding="30"
+                   BackgroundColor="#2D3748"
+                   BorderColor="#3B3B3B"
+                   HasShadow="True"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   WidthRequest="400">
+                <VerticalStackLayout Spacing="20">
+                    <Label Text="Welcome Back"
+                           FontSize="26"
+                           TextColor="White"
+                           HorizontalOptions="Center" />
+                    <Label Text="Sign in to your LuxeSpa account"
+                           FontSize="14"
+                           TextColor="LightGray"
+                           HorizontalOptions="Center" />
+
+                    <!-- Username -->
+                    <Entry x:Name="usernameEntry"
+                           Placeholder="Email or Username"
+                           TextColor="White"
+                           PlaceholderColor="LightGray"
+                           BackgroundColor="#334155"
+                           HeightRequest="50"
+                           Margin="0,10,0,0" />
+
+                    <!-- Password -->
+                    <Entry x:Name="passwordEntry"
+                           Placeholder="Password"
+                           IsPassword="True"
+                           TextColor="White"
+                           PlaceholderColor="LightGray"
+                           BackgroundColor="#334155"
+                           HeightRequest="50" />
+
+
+                    <!-- Sign In -->
+                    <Button Text="SIGN IN"
+                            BackgroundColor="#FF4B91"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            CornerRadius="8"
+                            HeightRequest="50"
+                            Clicked="OnLoginClicked" />
+
+                   
+                    <!-- Footer -->
+                    <Label Text="Don't have an account? Contact Administrator"
+                           FontSize="12"
+                           TextColor="LightGray"
+                           HorizontalTextAlignment="Center"
+                           Margin="0,20,0,0" />
+                </VerticalStackLayout>
+            </Frame>
+        </Grid>
+    </Grid>
+</ContentPage>
