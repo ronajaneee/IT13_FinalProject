@@ -1,0 +1,53 @@
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IT13_FinalProject.SettingsView">
+	<ScrollView>
+		<VerticalStackLayout Padding="24" Spacing="24">
+
+			<!-- Title -->
+			<Label Text="Settings"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center" />
+
+			<!-- Admin Profile Update -->
+			<Frame BackgroundColor="#243056" CornerRadius="16" Padding="18">
+				<VerticalStackLayout Spacing="10">
+					<Label Text="Update Profile" FontSize="20" FontAttributes="Bold" TextColor="#3b82f6" />
+					<Entry x:Name="NameEntry" Placeholder="Name" Text="{Binding AdminName}" />
+					<Entry x:Name="EmailEntry" Placeholder="Email" Text="{Binding AdminEmail}" />
+					<Entry x:Name="ContactEntry" Placeholder="Contact Number" Text="{Binding AdminContact}" />
+					<Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" Text="{Binding AdminPassword}" />
+					<Button Text="Update Profile" BackgroundColor="#3b82f6" TextColor="White" CornerRadius="8" Clicked="OnUpdateProfileClicked" />
+				</VerticalStackLayout>
+			</Frame>
+
+			<!-- Staff/Admin Account Management -->
+			<Frame BackgroundColor="#1f2937" CornerRadius="16" Padding="18">
+				<VerticalStackLayout Spacing="10">
+					<Label Text="Manage Staff/Admin Accounts" FontSize="20" FontAttributes="Bold" TextColor="#10b981" />
+					<Button Text="Add Account" BackgroundColor="#3b82f6" TextColor="White" CornerRadius="8" Clicked="OnAddAccountClicked" />
+					<CollectionView ItemsSource="{Binding Accounts}">
+						<CollectionView.ItemTemplate>
+							<DataTemplate>
+								<Frame BackgroundColor="#243056" CornerRadius="12" Padding="12" Margin="0,0,0,10">
+									<VerticalStackLayout Spacing="6">
+										<Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" TextColor="White" />
+										<Label Text="Role: {Binding Role}" FontSize="14" TextColor="#10b981" />
+										<Label Text="Email: {Binding Email}" FontSize="14" TextColor="#d1d5db" />
+										<HorizontalStackLayout Spacing="8">
+											<Button Text="Set Role" BackgroundColor="#3b82f6" TextColor="White" CornerRadius="8" Clicked="OnSetRoleClicked" />
+											<Button Text="Remove" BackgroundColor="#ef4444" TextColor="White" CornerRadius="8" Clicked="OnRemoveAccountClicked" />
+										</HorizontalStackLayout>
+									</VerticalStackLayout>
+								</Frame>
+							</DataTemplate>
+						</CollectionView.ItemTemplate>
+					</CollectionView>
+				</VerticalStackLayout>
+			</Frame>
+
+		</VerticalStackLayout>
+	</ScrollView>
+</ContentView>

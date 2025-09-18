@@ -87,16 +87,16 @@ public partial class AdminPage : ContentPage, INotifyPropertyChanged
                     MainContent.Content = new ServiceManagementView();
                     break;
                 case "Appointments":
-                    DisplayAlert("Navigation", "Appointments clicked.", "OK");
+                    MainContent.Content = new AppointmentManagementView();
                     break;
                 case "Payments":
                     MainContent.Content = new PaymentManagementView();
                     break;
                 case "Reports":
-                    DisplayAlert("Navigation", "Reports clicked.", "OK");
+                    MainContent.Content = new ReportAnalyticsView();
                     break;
                 case "Settings":
-                    DisplayAlert("Navigation", "Settings clicked.", "OK");
+                    MainContent.Content = new SettingsView();
                     break;
             }
 

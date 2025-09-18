@@ -1,0 +1,42 @@
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IT13_FinalProject.ReportAnalyticsView">
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="24">
+            <Label Text="Reports &amp; Analytics"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   TextColor="#1e2445"
+                   HorizontalOptions="Center" />
+
+            <!-- Sales Reports -->
+            <Frame BackgroundColor="#FFB84B" CornerRadius="16" Padding="18">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Sales Reports" FontSize="20" FontAttributes="Bold" TextColor="#1e2445" />
+                    <Label Text="Daily: $1,200" FontSize="16" TextColor="#1e2445" />
+                    <Label Text="Weekly: $8,400" FontSize="16" TextColor="#1e2445" />
+                    <Label Text="Monthly: $36,000" FontSize="16" TextColor="#1e2445" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Appointment Trends -->
+            <Frame BackgroundColor="#2D3748" CornerRadius="16" Padding="18">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Appointment Trends" FontSize="20" FontAttributes="Bold" TextColor="#FFB84B" />
+                    <Label Text="Busy Days: Friday, Saturday" FontSize="16" TextColor="White" />
+                    <Label Text="Popular Services: Massage, Facial" FontSize="16" TextColor="White" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Customer Retention & Loyalty -->
+            <Frame BackgroundColor="#4B91FF" CornerRadius="16" Padding="18">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Customer Retention &amp; Loyalty" FontSize="20" FontAttributes="Bold" TextColor="White" />
+                    <Label Text="Returning Customers: 75%" FontSize="16" TextColor="White" />
+                    <Label Text="Average Loyalty Points: 120" FontSize="16" TextColor="White" />
+                    <Label Text="Top Loyal Customer: Alice Smith" FontSize="16" TextColor="White" />
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentView>
