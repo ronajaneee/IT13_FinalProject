@@ -1,0 +1,35 @@
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IT13_FinalProject.CustomerManagementView">
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="24">
+            <Label Text="Customer Management"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   TextColor="#1e2445"
+                   HorizontalOptions="Center" />
+            <!-- Add Customer Button -->
+            <Button Text="Add Customer" BackgroundColor="#FF4B91" TextColor="White" CornerRadius="8" HeightRequest="44" HorizontalOptions="End" Margin="0,0,0,10" Clicked="OnAddCustomerClicked"/>
+            <!-- Customer List -->
+            <CollectionView ItemsSource="{Binding Customers}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BackgroundColor="#2D3748" CornerRadius="16" Padding="18" Margin="0,0,0,10">
+                            <VerticalStackLayout Spacing="8">
+                                <Label Text="{Binding Name}" FontSize="20" FontAttributes="Bold" TextColor="White" />
+                                <Label Text="Contact: {Binding ContactDetails}" FontSize="14" TextColor="WhiteSmoke" />
+                                <Label Text="Loyalty Points: {Binding LoyaltyPoints}" FontSize="14" TextColor="#FFB84B" />
+                                <Label Text="Booking History: {Binding BookingHistory}" FontSize="14" TextColor="#ccc" />
+                                <HorizontalStackLayout Spacing="10">
+                                    <Button Text="Edit" BackgroundColor="#FFB84B" TextColor="#1e2445" CornerRadius="8" Clicked="OnEditCustomerClicked" />
+                                    <Button Text="Delete" BackgroundColor="#FF4B91" TextColor="White" CornerRadius="8" Clicked="OnDeleteCustomerClicked" />
+                                    <Button Text="History" BackgroundColor="#2D3748" TextColor="#FF4B91" CornerRadius="8" Clicked="OnViewHistoryClicked" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentView>

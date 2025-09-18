@@ -90,7 +90,7 @@
                             HeightRequest="50"
                             Clicked="OnLoginClicked" />
 
-                   
+
                     <!-- Footer -->
                     <Label Text="Don't have an account? Contact Administrator"
                            FontSize="12"

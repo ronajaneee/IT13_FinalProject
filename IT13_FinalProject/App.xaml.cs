@@ -4,12 +4,15 @@
     {
         public App()
         {
-            InitializeComponent();
-        }
-
-        protected override Window CreateWindow(IActivationState? activationState)
-        {
-            return new Window(new LoginPage());
+            try
+            {
+                InitializeComponent();
+                MainPage = new NavigationPage(new LoginPage());
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"App initialization error: {ex}");
+            }
         }
     }
 }

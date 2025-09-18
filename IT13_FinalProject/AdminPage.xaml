@@ -3,45 +3,79 @@
              x:Class="IT13_FinalProject.AdminPage"
              BackgroundColor="#1e2445">
 
-    <!-- Grid with 2 columns -->
+    <ContentPage.Resources>
+        <!-- Sidebar Button Style -->
+        <Style x:Key="SidebarButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="TextColor" Value="#ccc"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <Setter.Value>
+                    <VisualStateGroupList>
+                        <!-- Hover State -->
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal"/>
+                            <VisualState x:Name="PointerOver">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#2a2f4d"/>
+                                    <!-- dark gray hover -->
+                                    <Setter Property="TextColor" Value="White"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#3b82f6"/>
+                                    <!-- blue when pressed -->
+                                    <Setter Property="TextColor" Value="White"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="220"/>
-            <!-- Sidebar fixed width -->
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
-            <!-- Main content takes the rest -->
         </Grid.ColumnDefinitions>
 
         <!-- Sidebar -->
-        <Grid Grid.Column="0"
-              x:Name="Sidebar"
-              WidthRequest="40">
+        <Grid x:Name="Sidebar" Grid.Column="0" WidthRequest="{Binding SidebarWidth}" VerticalOptions="FillAndExpand">
             <Grid.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                     <GradientStop Color="#1a1f3c" Offset="0.0"/>
                     <GradientStop Color="#151934" Offset="1.0"/>
                 </LinearGradientBrush>
             </Grid.Background>
-            <VerticalStackLayout Padding="20" Spacing="20">
+
+            <VerticalStackLayout Padding="10" Spacing="15" VerticalOptions="FillAndExpand">
+
                 <!-- Toggle Button -->
                 <Button x:Name="SidebarToggleButton"
                         Text="☰"
                         BackgroundColor="Transparent"
                         TextColor="White"
                         Clicked="OnSidebarToggleClicked"
-                        HeightRequest="40" WidthRequest="40"/>
+                        HeightRequest="40" WidthRequest="40"
+                        HorizontalOptions="Start"/>
+
                 <!-- Logo and Label -->
-                <HorizontalStackLayout Spacing="10">
+                <HorizontalStackLayout Spacing="10" VerticalOptions="Start" IsVisible="{Binding SidebarLabelVisible}">
                     <Frame BackgroundColor="#ff69b4"
                            HeightRequest="40" WidthRequest="40"
                            CornerRadius="10" HasShadow="False">
                         <Image Source="logo.png" HeightRequest="24"/>
                     </Frame>
-                    <Label Text="LuxeSpa" FontAttributes="Bold" FontSize="20" TextColor="White" IsVisible="{Binding SidebarLabelVisible}"/>
+                    <Label Text="LuxeSpa" FontAttributes="Bold" FontSize="20" TextColor="White" VerticalOptions="Center"/>
                 </HorizontalStackLayout>
 
                 <!-- Admin Info -->
-                <Frame BackgroundColor="#00000020" Padding="10" CornerRadius="12">
+                <Frame BackgroundColor="#00000020" Padding="10" CornerRadius="12" IsVisible="{Binding SidebarLabelVisible}">
                     <HorizontalStackLayout Spacing="10">
                         <Image Source="admin.png" HeightRequest="40" WidthRequest="40" Aspect="AspectFill"/>
                         <VerticalStackLayout>
@@ -52,28 +86,28 @@
                 </Frame>
 
                 <!-- Navigation -->
-                <ScrollView>
+                <ScrollView IsVisible="{Binding SidebarLabelVisible}" VerticalOptions="FillAndExpand">
                     <VerticalStackLayout Spacing="5">
-                        <Button Text="Dashboard" BackgroundColor="#ff69b420" TextColor="White" CornerRadius="8" Clicked="OnDashboardClicked"/>
-                        <Button Text="Customers" BackgroundColor="Transparent" TextColor="#ccc" Clicked="OnCustomersClicked"/>
-                        <Button Text="Staff" BackgroundColor="Transparent" TextColor="#ccc" Clicked="OnStaffClicked"/>
-                        <Button Text="Services" BackgroundColor="Transparent" TextColor="#ccc" Clicked="OnServicesClicked"/>
-                        <Button Text="Appointments" BackgroundColor="Transparent" TextColor="#ccc" Clicked="OnAppointmentsClicked"/>
-                        <Button Text="Payments" BackgroundColor="Transparent" TextColor="#ccc" Clicked="OnPaymentsClicked"/>
-                        <Button Text="Reports" BackgroundColor="Transparent" TextColor="#ccc" Clicked="OnReportsClicked"/>
-                        <Button Text="Settings" BackgroundColor="Transparent" TextColor="#ccc" Clicked="OnSettingsClicked"/>
+                        <Button x:Name="BtnDashboard" Text="Dashboard" Style="{StaticResource SidebarButtonStyle}" Clicked="OnNavButtonClicked"/>
+                        <Button x:Name="BtnCustomers" Text="Customers" Style="{StaticResource SidebarButtonStyle}" Clicked="OnNavButtonClicked"/>
+                        <Button x:Name="BtnStaff" Text="Staff" Style="{StaticResource SidebarButtonStyle}" Clicked="OnNavButtonClicked"/>
+                        <Button x:Name="BtnServices" Text="Services" Style="{StaticResource SidebarButtonStyle}" Clicked="OnNavButtonClicked"/>
+                        <Button x:Name="BtnAppointments" Text="Appointments" Style="{StaticResource SidebarButtonStyle}" Clicked="OnNavButtonClicked"/>
+                        <Button x:Name="BtnPayments" Text="Payments" Style="{StaticResource SidebarButtonStyle}" Clicked="OnNavButtonClicked"/>
+                        <Button x:Name="BtnReports" Text="Reports" Style="{StaticResource SidebarButtonStyle}" Clicked="OnNavButtonClicked"/>
+                        <Button x:Name="BtnSettings" Text="Settings" Style="{StaticResource SidebarButtonStyle}" Clicked="OnNavButtonClicked"/>
                     </VerticalStackLayout>
                 </ScrollView>
             </VerticalStackLayout>
         </Grid>
 
         <!-- Main Content -->
-        <Grid Grid.Column="1" BackgroundColor="#0a192f">
+        <ContentView x:Name="MainContent" Grid.Column="1" BackgroundColor="#0a192f" VerticalOptions="FillAndExpand">
             <Label Text="This is the Admin Dashboard"
                    TextColor="White"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"
                    FontSize="24"/>
-        </Grid>
+        </ContentView>
     </Grid>
 </ContentPage>

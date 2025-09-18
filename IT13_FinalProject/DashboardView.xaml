@@ -1,0 +1,55 @@
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IT13_FinalProject.DashboardView">
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="24">
+            <Label Text="Dashboard Overview"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   TextColor="#1e2445"
+                   HorizontalOptions="Center" />
+            <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto" ColumnSpacing="18" RowSpacing="18">
+                <!-- Bookings Card -->
+                <Frame Grid.Column="0" Grid.Row="0" BackgroundColor="#FF4B91" CornerRadius="16" Padding="18" HasShadow="True">
+                    <VerticalStackLayout>
+                        <Label Text="Bookings" FontSize="18" FontAttributes="Bold" TextColor="White" />
+                        <Label Text="120" FontSize="32" FontAttributes="Bold" TextColor="White" />
+                        <Label Text="Today" FontSize="14" TextColor="WhiteSmoke" />
+                    </VerticalStackLayout>
+                </Frame>
+                <!-- Customers Card -->
+                <Frame Grid.Column="1" Grid.Row="0" BackgroundColor="#2D3748" CornerRadius="16" Padding="18" HasShadow="True">
+                    <VerticalStackLayout>
+                        <Label Text="Customers" FontSize="18" FontAttributes="Bold" TextColor="White" />
+                        <Label Text="350" FontSize="32" FontAttributes="Bold" TextColor="White" />
+                        <Label Text="Active" FontSize="14" TextColor="WhiteSmoke" />
+                    </VerticalStackLayout>
+                </Frame>
+                <!-- Staff Activity Card -->
+                <Frame Grid.Column="2" Grid.Row="0" BackgroundColor="#1e2445" CornerRadius="16" Padding="18" HasShadow="True">
+                    <VerticalStackLayout>
+                        <Label Text="Staff Activity" FontSize="18" FontAttributes="Bold" TextColor="White" />
+                        <Label Text="5" FontSize="32" FontAttributes="Bold" TextColor="White" />
+                        <Label Text="On Duty" FontSize="14" TextColor="WhiteSmoke" />
+                    </VerticalStackLayout>
+                </Frame>
+                <!-- Sales Card -->
+                <Frame Grid.Column="0" Grid.Row="1" BackgroundColor="#FFB84B" CornerRadius="16" Padding="18" HasShadow="True">
+                    <VerticalStackLayout>
+                        <Label Text="Sales" FontSize="18" FontAttributes="Bold" TextColor="#1e2445" />
+                        <Label Text="$2,500" FontSize="32" FontAttributes="Bold" TextColor="#1e2445" />
+                        <Label Text="This Month" FontSize="14" TextColor="#1e2445" />
+                    </VerticalStackLayout>
+                </Frame>
+                <!-- Notifications Card -->
+                <Frame Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" BackgroundColor="#2D3748" CornerRadius="16" Padding="18" HasShadow="True">
+                    <VerticalStackLayout>
+                        <Label Text="Notifications" FontSize="18" FontAttributes="Bold" TextColor="White" />
+                        <Label Text="3 new messages" FontSize="16" TextColor="WhiteSmoke" />
+                        <Label Text="2 upcoming appointments" FontSize="16" TextColor="WhiteSmoke" />
+                    </VerticalStackLayout>
+                </Frame>
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentView>

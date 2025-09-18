@@ -8,6 +8,11 @@ public partial class AdminPage : ContentPage, INotifyPropertyChanged
 
     private bool isSidebarExpanded = false;
     private bool sidebarLabelVisible = false;
+    private double sidebarWidth = 40;
+
+    // Track the currently active button
+    private Button _activeButton;
+
     public bool SidebarLabelVisible
     {
         get => sidebarLabelVisible;
@@ -21,59 +26,98 @@ public partial class AdminPage : ContentPage, INotifyPropertyChanged
         }
     }
 
+    public double SidebarWidth
+    {
+        get => sidebarWidth;
+        set
+        {
+            if (sidebarWidth != value)
+            {
+                sidebarWidth = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SidebarWidth)));
+                if (Sidebar != null)
+                    Sidebar.WidthRequest = sidebarWidth;
+            }
+        }
+    }
+
     public AdminPage()
     {
         InitializeComponent();
         BindingContext = this;
-        Sidebar.WidthRequest = 40;
+        SidebarWidth = 40;
         SidebarLabelVisible = false;
+        if (Sidebar != null)
+            Sidebar.WidthRequest = SidebarWidth;
+
+        // Show dashboard by default
+        MainContent.Content = new DashboardView();
+
+        // Set Dashboard as active on load
+        SetActiveButton(BtnDashboard);
     }
 
     private void OnSidebarToggleClicked(object sender, EventArgs e)
     {
         isSidebarExpanded = !isSidebarExpanded;
-        Sidebar.WidthRequest = isSidebarExpanded ? 220 : 40;
+        SidebarWidth = isSidebarExpanded ? 220 : 40;
         SidebarLabelVisible = isSidebarExpanded;
+        if (Sidebar != null)
+            Sidebar.WidthRequest = SidebarWidth;
     }
 
-    private void OnDashboardClicked(object sender, EventArgs e)
+    // Unified click handler for all nav buttons
+    private void OnNavButtonClicked(object sender, EventArgs e)
     {
-        // TODO: Navigate to Dashboard or show dashboard content
-        DisplayAlert("Navigation", "Dashboard clicked.", "OK");
+        if (sender is Button clickedButton)
+        {
+            // Change main content based on button text
+            switch (clickedButton.Text)
+            {
+                case "Dashboard":
+                    MainContent.Content = new DashboardView();
+                    break;
+                case "Customers":
+                    MainContent.Content = new CustomerManagementView();
+                    break;
+                case "Staff":
+                    MainContent.Content = new StaffManagementView();
+                    break;
+                case "Services":
+                    MainContent.Content = new ServiceManagementView();
+                    break;
+                case "Appointments":
+                    DisplayAlert("Navigation", "Appointments clicked.", "OK");
+                    break;
+                case "Payments":
+                    MainContent.Content = new PaymentManagementView();
+                    break;
+                case "Reports":
+                    DisplayAlert("Navigation", "Reports clicked.", "OK");
+                    break;
+                case "Settings":
+                    DisplayAlert("Navigation", "Settings clicked.", "OK");
+                    break;
+            }
+
+            // Highlight the active button
+            SetActiveButton(clickedButton);
+        }
     }
 
-    private void OnCustomersClicked(object sender, EventArgs e)
+    private void SetActiveButton(Button newActiveButton)
     {
-        DisplayAlert("Navigation", "Customers clicked.", "OK");
-    }
+        // Reset previous active button
+        if (_activeButton != null)
+        {
+            _activeButton.BackgroundColor = Colors.Transparent;
+            _activeButton.TextColor = Color.FromArgb("#ccc");
+        }
 
-    private void OnStaffClicked(object sender, EventArgs e)
-    {
-        DisplayAlert("Navigation", "Staff clicked.", "OK");
-    }
+        // Set new active button
+        newActiveButton.BackgroundColor = Color.FromArgb("#3b82f6"); // Blue active
+        newActiveButton.TextColor = Colors.White;
 
-    private void OnServicesClicked(object sender, EventArgs e)
-    {
-        DisplayAlert("Navigation", "Services clicked.", "OK");
-    }
-
-    private void OnAppointmentsClicked(object sender, EventArgs e)
-    {
-        DisplayAlert("Navigation", "Appointments clicked.", "OK");
-    }
-
-    private void OnPaymentsClicked(object sender, EventArgs e)
-    {
-        DisplayAlert("Navigation", "Payments clicked.", "OK");
-    }
-
-    private void OnReportsClicked(object sender, EventArgs e)
-    {
-        DisplayAlert("Navigation", "Reports clicked.", "OK");
-    }
-
-    private void OnSettingsClicked(object sender, EventArgs e)
-    {
-        DisplayAlert("Navigation", "Settings clicked.", "OK");
+        _activeButton = newActiveButton;
     }
 }

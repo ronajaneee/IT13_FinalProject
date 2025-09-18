@@ -1,0 +1,37 @@
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IT13_FinalProject.PaymentManagementView">
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="24">
+            <Label Text="Payments &amp; Billing"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   TextColor="#1e2445"
+                   HorizontalOptions="Center" />
+
+            <Button Text="Record Payment" BackgroundColor="#4BCB4B" TextColor="White" CornerRadius="8" HeightRequest="44" HorizontalOptions="End" Margin="0,0,0,10" Clicked="OnAddPaymentClicked"/>
+
+            <CollectionView ItemsSource="{Binding Payments}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BackgroundColor="#2D3748" CornerRadius="12" Padding="12" Margin="0,0,0,10">
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="{Binding CustomerName}" FontSize="18" FontAttributes="Bold" TextColor="White" />
+                                <Label Text="Appointment: {Binding AppointmentId}" FontSize="14" TextColor="#ccc" />
+                                <Label Text="Amount: {Binding Amount, StringFormat='${0:F2}'}" FontSize="14" TextColor="#FFB84B" />
+                                <Label Text="Method: {Binding Method}" FontSize="14" TextColor="WhiteSmoke" />
+                                <Label Text="Date: {Binding Date}" FontSize="12" TextColor="#999" />
+                                <HorizontalStackLayout Spacing="8">
+                                    <Button Text="Edit" BackgroundColor="#FFB84B" TextColor="#1e2445" CornerRadius="8" Clicked="OnEditPaymentClicked" />
+                                    <Button Text="Delete" BackgroundColor="#FF4B91" TextColor="White" CornerRadius="8" Clicked="OnDeletePaymentClicked" />
+                                    <Button Text="Receipt" BackgroundColor="#3b82f6" TextColor="White" CornerRadius="8" Clicked="OnViewReceiptClicked" />
+                                    <Button Text="History" BackgroundColor="#2D3748" TextColor="#4BCB4B" CornerRadius="8" Clicked="OnViewBillingHistoryClicked" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentView>

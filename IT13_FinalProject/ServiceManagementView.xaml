@@ -1,0 +1,36 @@
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IT13_FinalProject.ServiceManagementView">
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="24">
+            <Label Text="Service Management"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   TextColor="#1e2445"
+                   HorizontalOptions="Center" />
+
+            <Button Text="Add Service" BackgroundColor="#4BCB4B" TextColor="White" CornerRadius="8" HeightRequest="44" HorizontalOptions="End" Margin="0,0,0,10" Clicked="OnAddServiceClicked"/>
+
+            <CollectionView ItemsSource="{Binding Services}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BackgroundColor="#2D3748" CornerRadius="16" Padding="18" Margin="0,0,0,10">
+                            <VerticalStackLayout Spacing="8">
+                                <Label Text="{Binding Name}" FontSize="20" FontAttributes="Bold" TextColor="White" />
+                                <Label Text="Price: {Binding Price, StringFormat='${0:F2}'}" FontSize="14" TextColor="#FFB84B" />
+                                <Label Text="Duration: {Binding Duration}" FontSize="14" TextColor="WhiteSmoke" />
+                                <Label Text="Description: {Binding Description}" FontSize="14" TextColor="#ccc" />
+                                <HorizontalStackLayout Spacing="10">
+                                    <Button Text="Edit" BackgroundColor="#FFB84B" TextColor="#1e2445" CornerRadius="8" Clicked="OnEditServiceClicked" />
+                                    <Button Text="Delete" BackgroundColor="#FF4B91" TextColor="White" CornerRadius="8" Clicked="OnDeleteServiceClicked" />
+                                    <Button Text="Update Price" BackgroundColor="#4BCB4B" TextColor="#1e2445" CornerRadius="8" Clicked="OnUpdatePriceClicked" />
+                                    <Button Text="Update Duration" BackgroundColor="#2D3748" TextColor="#4BCB4B" CornerRadius="8" Clicked="OnUpdateDurationClicked" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentView>
