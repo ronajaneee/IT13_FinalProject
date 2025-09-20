@@ -20,7 +20,7 @@
                                 <Label Text="Contact: {Binding ContactDetails}" FontSize="14" TextColor="WhiteSmoke" />
                                 <Label Text="Loyalty Points: {Binding LoyaltyPoints}" FontSize="14" TextColor="#FFB84B" />
                                 <Label Text="Booking History: {Binding BookingHistory}" FontSize="14" TextColor="#ccc" />
-                                <HorizontalStackLayout Spacing="10">
+                                <HorizontalStackLayout Spacing="16">
                                     <Button Text="Edit" BackgroundColor="#FFB84B" TextColor="#1e2445" CornerRadius="8" Clicked="OnEditCustomerClicked" />
                                     <Button Text="Delete" BackgroundColor="#FF4B91" TextColor="White" CornerRadius="8" Clicked="OnDeleteCustomerClicked" />
                                     <Button Text="History" BackgroundColor="#2D3748" TextColor="#FF4B91" CornerRadius="8" Clicked="OnViewHistoryClicked" />

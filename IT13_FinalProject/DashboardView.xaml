@@ -1,5 +1,6 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:microcharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              x:Class="IT13_FinalProject.DashboardView">
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="24">
@@ -8,48 +9,191 @@
                    FontAttributes="Bold"
                    TextColor="#1e2445"
                    HorizontalOptions="Center" />
+            
+            <!-- Quick Stats Grid -->
             <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto" ColumnSpacing="18" RowSpacing="18">
                 <!-- Bookings Card -->
                 <Frame Grid.Column="0" Grid.Row="0" BackgroundColor="#FF4B91" CornerRadius="16" Padding="18" HasShadow="True">
                     <VerticalStackLayout>
                         <Label Text="Bookings" FontSize="18" FontAttributes="Bold" TextColor="White" />
                         <Label Text="120" FontSize="32" FontAttributes="Bold" TextColor="White" />
-                        <Label Text="Today" FontSize="14" TextColor="WhiteSmoke" />
+                        <HorizontalStackLayout Spacing="5">
+                            <Label Text="?" TextColor="#90EE90" FontSize="16"/>
+                            <Label Text="+5% vs yesterday" TextColor="WhiteSmoke" FontSize="14"/>
+                        </HorizontalStackLayout>
                     </VerticalStackLayout>
                 </Frame>
+                
                 <!-- Customers Card -->
                 <Frame Grid.Column="1" Grid.Row="0" BackgroundColor="#2D3748" CornerRadius="16" Padding="18" HasShadow="True">
                     <VerticalStackLayout>
                         <Label Text="Customers" FontSize="18" FontAttributes="Bold" TextColor="White" />
                         <Label Text="350" FontSize="32" FontAttributes="Bold" TextColor="White" />
-                        <Label Text="Active" FontSize="14" TextColor="WhiteSmoke" />
+                        <HorizontalStackLayout Spacing="5">
+                            <Label Text="+" TextColor="#90EE90" FontSize="14"/>
+                            <Label Text="25 new this month" TextColor="WhiteSmoke" FontSize="14"/>
+                        </HorizontalStackLayout>
                     </VerticalStackLayout>
                 </Frame>
+                
                 <!-- Staff Activity Card -->
                 <Frame Grid.Column="2" Grid.Row="0" BackgroundColor="#1e2445" CornerRadius="16" Padding="18" HasShadow="True">
-                    <VerticalStackLayout>
+                    <VerticalStackLayout Spacing="4">
                         <Label Text="Staff Activity" FontSize="18" FontAttributes="Bold" TextColor="White" />
                         <Label Text="5" FontSize="32" FontAttributes="Bold" TextColor="White" />
                         <Label Text="On Duty" FontSize="14" TextColor="WhiteSmoke" />
+                        <Label Text="2 on break" FontSize="12" TextColor="#FFB84B" />
                     </VerticalStackLayout>
                 </Frame>
+                
                 <!-- Sales Card -->
                 <Frame Grid.Column="0" Grid.Row="1" BackgroundColor="#FFB84B" CornerRadius="16" Padding="18" HasShadow="True">
-                    <VerticalStackLayout>
+                    <VerticalStackLayout Spacing="4">
                         <Label Text="Sales" FontSize="18" FontAttributes="Bold" TextColor="#1e2445" />
                         <Label Text="$2,500" FontSize="32" FontAttributes="Bold" TextColor="#1e2445" />
-                        <Label Text="This Month" FontSize="14" TextColor="#1e2445" />
+                        <Label Text="Target: $3,500" FontSize="14" TextColor="#1e2445" />
+                        <ProgressBar Progress="0.71" ProgressColor="#1e2445" />
                     </VerticalStackLayout>
                 </Frame>
+                
                 <!-- Notifications Card -->
                 <Frame Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" BackgroundColor="#2D3748" CornerRadius="16" Padding="18" HasShadow="True">
-                    <VerticalStackLayout>
+                    <VerticalStackLayout Spacing="8">
                         <Label Text="Notifications" FontSize="18" FontAttributes="Bold" TextColor="White" />
-                        <Label Text="3 new messages" FontSize="16" TextColor="WhiteSmoke" />
-                        <Label Text="2 upcoming appointments" FontSize="16" TextColor="WhiteSmoke" />
+                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="8">
+                            <Label Grid.Row="0" Grid.Column="0" Text="??" FontSize="16"/>
+                            <Label Grid.Row="0" Grid.Column="1" Text="3 new messages" FontSize="16" TextColor="WhiteSmoke" />
+                            <Label Grid.Row="1" Grid.Column="0" Text="??" FontSize="16"/>
+                            <Label Grid.Row="1" Grid.Column="1" Text="2 upcoming appointments" FontSize="16" TextColor="WhiteSmoke" />
+                            <Label Grid.Row="2" Grid.Column="0" Text="??" FontSize="16"/>
+                            <Label Grid.Row="2" Grid.Column="1" Text="Massage oil stock running low" FontSize="16" TextColor="#FFB84B" />
+                        </Grid>
                     </VerticalStackLayout>
                 </Frame>
             </Grid>
+
+            <!-- Analytics Section -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="18">
+                <!-- Bookings Chart -->
+                <Frame Grid.Column="0" BackgroundColor="#2D3748" CornerRadius="16" Padding="18" HasShadow="True">
+                    <VerticalStackLayout>
+                        <Label Text="Weekly Bookings" FontSize="18" FontAttributes="Bold" TextColor="White" Margin="0,0,0,10"/>
+                        <microcharts:ChartView x:Name="BookingsChart" HeightRequest="200"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Revenue Chart -->
+                <Frame Grid.Column="1" BackgroundColor="#2D3748" CornerRadius="16" Padding="18" HasShadow="True">
+                    <VerticalStackLayout>
+                        <Label Text="Revenue Trend" FontSize="18" FontAttributes="Bold" TextColor="White" Margin="0,0,0,10"/>
+                        <microcharts:ChartView x:Name="RevenueChart" HeightRequest="200"/>
+                    </VerticalStackLayout>
+                </Frame>
+            </Grid>
+
+            <!-- Customer Insights -->
+            <Frame BackgroundColor="#1e2445" CornerRadius="16" Padding="18" HasShadow="True">
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="18">
+                    <VerticalStackLayout Grid.Column="0">
+                        <Label Text="New Customers" FontSize="16" TextColor="White"/>
+                        <Label Text="40" FontSize="24" FontAttributes="Bold" TextColor="#90EE90"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="1">
+                        <Label Text="Returning" FontSize="16" TextColor="White"/>
+                        <Label Text="310" FontSize="24" FontAttributes="Bold" TextColor="#4B9BFF"/>
+                    </VerticalStackLayout>
+                    <microcharts:ChartView Grid.Column="2" x:Name="CustomerPieChart" HeightRequest="100"/>
+                </Grid>
+            </Frame>
+
+            <!-- Staff Activity List -->
+            <Frame BackgroundColor="#2D3748" CornerRadius="16" Padding="18" HasShadow="True">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Active Staff" FontSize="18" FontAttributes="Bold" TextColor="White"/>
+                    <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="12">
+                        <!-- Staff Member 1 -->
+                        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
+                            <Frame Grid.Column="0" CornerRadius="20" HeightRequest="40" WidthRequest="40" Padding="0"
+                                   BackgroundColor="#FF4B91">
+                                <Label Text="A" HorizontalOptions="Center" VerticalOptions="Center"
+                                       TextColor="White" FontAttributes="Bold"/>
+                            </Frame>
+                            <VerticalStackLayout Grid.Column="1" Margin="12,0,0,0">
+                                <Label Text="Anna" TextColor="White" FontAttributes="Bold"/>
+                                <Label Text="Massage (2 sessions)" TextColor="WhiteSmoke" FontSize="12"/>
+                            </VerticalStackLayout>
+                            <Frame Grid.Column="2" BackgroundColor="#90EE90" CornerRadius="12" Padding="8,4">
+                                <Label Text="Active" TextColor="#1e2445" FontSize="12"/>
+                            </Frame>
+                        </Grid>
+                        
+                        <!-- Staff Member 2 -->
+                        <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto">
+                            <Frame Grid.Column="0" CornerRadius="20" HeightRequest="40" WidthRequest="40" Padding="0"
+                                   BackgroundColor="#4B9BFF">
+                                <Label Text="J" HorizontalOptions="Center" VerticalOptions="Center"
+                                       TextColor="White" FontAttributes="Bold"/>
+                            </Frame>
+                            <VerticalStackLayout Grid.Column="1" Margin="12,0,0,0">
+                                <Label Text="John" TextColor="White" FontAttributes="Bold"/>
+                                <Label Text="Facial (1 session)" TextColor="WhiteSmoke" FontSize="12"/>
+                            </VerticalStackLayout>
+                            <Frame Grid.Column="2" BackgroundColor="#90EE90" CornerRadius="12" Padding="8,4">
+                                <Label Text="Active" TextColor="#1e2445" FontSize="12"/>
+                            </Frame>
+                        </Grid>
+                        
+                        <!-- Staff Member 3 -->
+                        <Grid Grid.Row="2" ColumnDefinitions="Auto,*,Auto">
+                            <Frame Grid.Column="0" CornerRadius="20" HeightRequest="40" WidthRequest="40" Padding="0"
+                                   BackgroundColor="#FFB84B">
+                                <Label Text="M" HorizontalOptions="Center" VerticalOptions="Center"
+                                       TextColor="White" FontAttributes="Bold"/>
+                            </Frame>
+                            <VerticalStackLayout Grid.Column="1" Margin="12,0,0,0">
+                                <Label Text="Mia" TextColor="White" FontAttributes="Bold"/>
+                                <Label Text="Reception Desk" TextColor="WhiteSmoke" FontSize="12"/>
+                            </VerticalStackLayout>
+                            <Frame Grid.Column="2" BackgroundColor="#FFB84B" CornerRadius="12" Padding="8,4">
+                                <Label Text="Break" TextColor="#1e2445" FontSize="12"/>
+                            </Frame>
+                        </Grid>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Upcoming Appointments -->
+            <Frame BackgroundColor="#2D3748" CornerRadius="16" Padding="18" HasShadow="True">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Upcoming Appointments" FontSize="18" FontAttributes="Bold" TextColor="White"/>
+                    <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="12">
+                        <Grid Grid.Row="0" ColumnDefinitions="*,*,Auto,Auto">
+                            <Label Grid.Column="0" Text="Sarah Miller" TextColor="White"/>
+                            <Label Grid.Column="1" Text="Massage" TextColor="WhiteSmoke"/>
+                            <Label Grid.Column="2" Text="2:00 PM" TextColor="WhiteSmoke"/>
+                            <Frame Grid.Column="3" BackgroundColor="#90EE90" CornerRadius="12" Padding="8,4">
+                                <Label Text="Confirmed" TextColor="#1e2445" FontSize="12"/>
+                            </Frame>
+                        </Grid>
+                        <Grid Grid.Row="1" ColumnDefinitions="*,*,Auto,Auto">
+                            <Label Grid.Column="0" Text="James Wilson" TextColor="White"/>
+                            <Label Grid.Column="1" Text="Facial" TextColor="WhiteSmoke"/>
+                            <Label Grid.Column="2" Text="3:30 PM" TextColor="WhiteSmoke"/>
+                            <Frame Grid.Column="3" BackgroundColor="#FFB84B" CornerRadius="12" Padding="8,4">
+                                <Label Text="Pending" TextColor="#1e2445" FontSize="12"/>
+                            </Frame>
+                        </Grid>
+                        <Grid Grid.Row="2" ColumnDefinitions="*,*,Auto,Auto">
+                            <Label Grid.Column="0" Text="Emma Davis" TextColor="White"/>
+                            <Label Grid.Column="1" Text="Hair Spa" TextColor="WhiteSmoke"/>
+                            <Label Grid.Column="2" Text="4:15 PM" TextColor="WhiteSmoke"/>
+                            <Frame Grid.Column="3" BackgroundColor="#90EE90" CornerRadius="12" Padding="8,4">
+                                <Label Text="Confirmed" TextColor="#1e2445" FontSize="12"/>
+                            </Frame>
+                        </Grid>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
         </VerticalStackLayout>
     </ScrollView>
 </ContentView>

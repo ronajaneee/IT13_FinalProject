@@ -18,7 +18,7 @@
                                 <Label Text="Role: {Binding Role}" FontSize="14" TextColor="#FFB84B" />
                                 <Label Text="Schedule: {Binding WorkSchedule}" FontSize="14" TextColor="WhiteSmoke" />
                                 <Label Text="Performance: {Binding Performance}" FontSize="14" TextColor="#ccc" />
-                                <HorizontalStackLayout Spacing="10">
+                                <HorizontalStackLayout Spacing="16">
                                     <Button Text="Edit" BackgroundColor="#FFB84B" TextColor="#1e2445" CornerRadius="8" Clicked="OnEditStaffClicked" />
                                     <Button Text="Delete" BackgroundColor="#FF4B91" TextColor="White" CornerRadius="8" Clicked="OnDeleteStaffClicked" />
                                     <Button Text="Assign Role" BackgroundColor="#4B91FF" TextColor="White" CornerRadius="8" Clicked="OnAssignRoleClicked" />

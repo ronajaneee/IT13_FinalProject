@@ -20,7 +20,7 @@
                                 <Label Text="Price: {Binding Price, StringFormat='${0:F2}'}" FontSize="14" TextColor="#FFB84B" />
                                 <Label Text="Duration: {Binding Duration}" FontSize="14" TextColor="WhiteSmoke" />
                                 <Label Text="Description: {Binding Description}" FontSize="14" TextColor="#ccc" />
-                                <HorizontalStackLayout Spacing="10">
+                                <HorizontalStackLayout Spacing="16">
                                     <Button Text="Edit" BackgroundColor="#FFB84B" TextColor="#1e2445" CornerRadius="8" Clicked="OnEditServiceClicked" />
                                     <Button Text="Delete" BackgroundColor="#FF4B91" TextColor="White" CornerRadius="8" Clicked="OnDeleteServiceClicked" />
                                     <Button Text="Update Price" BackgroundColor="#4BCB4B" TextColor="#1e2445" CornerRadius="8" Clicked="OnUpdatePriceClicked" />

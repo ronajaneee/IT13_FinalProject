@@ -22,7 +22,7 @@
                                 <Label Text="Date/Time: {Binding DateTime}" FontSize="14" TextColor="#FFB84B" />
                                 <Label Text="Status: {Binding Status}" FontSize="14" TextColor="WhiteSmoke" />
                                 <Label Text="Assigned Staff: {Binding AssignedStaff}" FontSize="14" TextColor="#ccc" />
-                                <HorizontalStackLayout Spacing="8">
+                                <HorizontalStackLayout Spacing="16">
                                     <Button Text="Approve" BackgroundColor="#3b82f6" TextColor="White" CornerRadius="8" Clicked="OnApproveClicked" />
                                     <Button Text="Reschedule" BackgroundColor="#FFB84B" TextColor="#1e2445" CornerRadius="8" Clicked="OnRescheduleClicked" />
                                     <Button Text="Cancel" BackgroundColor="#FF4B91" TextColor="White" CornerRadius="8" Clicked="OnCancelClicked" />

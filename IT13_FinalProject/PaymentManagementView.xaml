@@ -21,7 +21,7 @@
                                 <Label Text="Amount: {Binding Amount, StringFormat='${0:F2}'}" FontSize="14" TextColor="#FFB84B" />
                                 <Label Text="Method: {Binding Method}" FontSize="14" TextColor="WhiteSmoke" />
                                 <Label Text="Date: {Binding Date}" FontSize="12" TextColor="#999" />
-                                <HorizontalStackLayout Spacing="8">
+                                <HorizontalStackLayout Spacing="16">
                                     <Button Text="Edit" BackgroundColor="#FFB84B" TextColor="#1e2445" CornerRadius="8" Clicked="OnEditPaymentClicked" />
                                     <Button Text="Delete" BackgroundColor="#FF4B91" TextColor="White" CornerRadius="8" Clicked="OnDeletePaymentClicked" />
                                     <Button Text="Receipt" BackgroundColor="#3b82f6" TextColor="White" CornerRadius="8" Clicked="OnViewReceiptClicked" />
