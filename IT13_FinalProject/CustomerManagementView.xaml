@@ -8,28 +8,121 @@
                    FontAttributes="Bold"
                    TextColor="#1e2445"
                    HorizontalOptions="Center" />
-            <!-- Add Customer Button -->
-            <Button Text="Add Customer" BackgroundColor="#FF4B91" TextColor="White" CornerRadius="8" HeightRequest="44" HorizontalOptions="End" Margin="0,0,0,10" Clicked="OnAddCustomerClicked"/>
-            <!-- Customer List -->
-            <CollectionView ItemsSource="{Binding Customers}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame BackgroundColor="#2D3748" CornerRadius="16" Padding="18" Margin="0,0,0,10">
-                            <VerticalStackLayout Spacing="8">
-                                <Label Text="{Binding Name}" FontSize="20" FontAttributes="Bold" TextColor="White" />
-                                <Label Text="Contact: {Binding ContactDetails}" FontSize="14" TextColor="WhiteSmoke" />
-                                <Label Text="Loyalty Points: {Binding LoyaltyPoints}" FontSize="14" TextColor="#FFB84B" />
-                                <Label Text="Booking History: {Binding BookingHistory}" FontSize="14" TextColor="#ccc" />
-                                <HorizontalStackLayout Spacing="10">
-                                    <Button Text="Edit" BackgroundColor="#FFB84B" TextColor="#1e2445" CornerRadius="8" Clicked="OnEditCustomerClicked" />
-                                    <Button Text="Delete" BackgroundColor="#FF4B91" TextColor="White" CornerRadius="8" Clicked="OnDeleteCustomerClicked" />
-                                    <Button Text="History" BackgroundColor="#2D3748" TextColor="#FF4B91" CornerRadius="8" Clicked="OnViewHistoryClicked" />
-                                </HorizontalStackLayout>
-                            </VerticalStackLayout>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+
+            <!-- 1. Customer Profile Overview -->
+            <Frame BackgroundColor="#fff" CornerRadius="16" Padding="18" HasShadow="True">
+                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto">
+                    <Image Grid.RowSpan="3" Source="profile_placeholder.png" HeightRequest="80" WidthRequest="80" VerticalOptions="Start" />
+                    <VerticalStackLayout Grid.Column="1" Spacing="4">
+                        <Label Text="{Binding SelectedCustomer.Name}" FontSize="20" FontAttributes="Bold" TextColor="#1e2445" />
+                        <Label Text="{Binding SelectedCustomer.AgeGender}" FontSize="14" TextColor="#2D3748" />
+                        <HorizontalStackLayout Spacing="12">
+                            <Image Source="phone_icon.png" HeightRequest="16" WidthRequest="16" />
+                            <Label Text="{Binding SelectedCustomer.Phone}" FontSize="13" TextColor="#4B91FF" />
+                            <Image Source="email_icon.png" HeightRequest="16" WidthRequest="16" />
+                            <Label Text="{Binding SelectedCustomer.Email}" FontSize="13" TextColor="#4B91FF" />
+                        </HorizontalStackLayout>
+                        <Label Text="{Binding SelectedCustomer.Address}" FontSize="13" TextColor="#2D3748" />
+                        <HorizontalStackLayout Spacing="8">
+                            <Image Source="loyalty_icon.png" HeightRequest="16" WidthRequest="16" />
+                            <Label Text="{Binding SelectedCustomer.LoyaltyPoints, StringFormat='{0} pts'}" FontSize="13" TextColor="#FFB84B" />
+                            <Frame BackgroundColor="{Binding SelectedCustomer.MembershipColor}" Padding="4,2" CornerRadius="8" HasShadow="False">
+                                <Label Text="{Binding SelectedCustomer.MembershipStatus}" FontSize="12" TextColor="White" />
+                            </Frame>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Grid>
+            </Frame>
+
+            <!-- 2. Booking and Visit History -->
+            <Frame BackgroundColor="#fff" CornerRadius="16" Padding="18" HasShadow="True">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Booking and Visit History" FontSize="16" FontAttributes="Bold" TextColor="#1e2445" />
+                    <Label Text="{Binding SelectedCustomer.VisitTrend}" FontSize="13" TextColor="#10b981" />
+                    <Grid ColumnDefinitions="*,*,*,*" RowDefinitions="Auto,Auto,Auto,Auto">
+                        <Label Grid.Column="0" Grid.Row="0" Text="Date" FontAttributes="Bold" FontSize="13" TextColor="#4B91FF" />
+                        <Label Grid.Column="1" Grid.Row="0" Text="Service" FontAttributes="Bold" FontSize="13" TextColor="#4B91FF" />
+                        <Label Grid.Column="2" Grid.Row="0" Text="Staff" FontAttributes="Bold" FontSize="13" TextColor="#4B91FF" />
+                        <Label Grid.Column="3" Grid.Row="0" Text="Status" FontAttributes="Bold" FontSize="13" TextColor="#4B91FF" />
+                        <!-- Example rows -->
+                        <Label Grid.Column="0" Grid.Row="1" Text="2024-06-01" FontSize="13" TextColor="#1e2445" />
+                        <Label Grid.Column="1" Grid.Row="1" Text="Massage" FontSize="13" TextColor="#1e2445" />
+                        <Label Grid.Column="2" Grid.Row="1" Text="Anna" FontSize="13" TextColor="#1e2445" />
+                        <Label Grid.Column="3" Grid.Row="1" Text="Completed" FontSize="13" TextColor="#10b981" />
+                        <Label Grid.Column="0" Grid.Row="2" Text="2024-06-10" FontSize="13" TextColor="#1e2445" />
+                        <Label Grid.Column="1" Grid.Row="2" Text="Facial" FontSize="13" TextColor="#1e2445" />
+                        <Label Grid.Column="2" Grid.Row="2" Text="John" FontSize="13" TextColor="#1e2445" />
+                        <Label Grid.Column="3" Grid.Row="2" Text="Upcoming" FontSize="13" TextColor="#FF4B91" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- 3. Customer Segmentation / Tagging -->
+            <Frame BackgroundColor="#fff" CornerRadius="16" Padding="18" HasShadow="True">
+                <HorizontalStackLayout Spacing="8">
+                    <Frame BackgroundColor="#FFB84B" Padding="4,2" CornerRadius="8" HasShadow="False">
+                        <Label Text="High Spender" FontSize="12" TextColor="#1e2445" />
+                    </Frame>
+                    <Frame BackgroundColor="#10b981" Padding="4,2" CornerRadius="8" HasShadow="False">
+                        <Label Text="New Customer" FontSize="12" TextColor="White" />
+                    </Frame>
+                    <Frame BackgroundColor="#4B91FF" Padding="4,2" CornerRadius="8" HasShadow="False">
+                        <Label Text="Frequent Visitor" FontSize="12" TextColor="White" />
+                    </Frame>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <!-- 4. Loyalty and Rewards -->
+            <Frame BackgroundColor="#fff" CornerRadius="16" Padding="18" HasShadow="True">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Loyalty and Rewards" FontSize="16" FontAttributes="Bold" TextColor="#1e2445" />
+                    <Label Text="Progress to next reward" FontSize="13" TextColor="#2D3748" />
+                    <ProgressBar Progress="{Binding SelectedCustomer.LoyaltyProgress}" HeightRequest="8" BackgroundColor="#eee" />
+                    <Label Text="Redeemed Rewards" FontSize="13" TextColor="#4B91FF" />
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Free Massage (2024-05-01)" FontSize="13" TextColor="#1e2445" />
+                        <Label Text="Facial Discount (2024-04-10)" FontSize="13" TextColor="#1e2445" />
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- 5. Payment and Billing History -->
+            <Frame BackgroundColor="#fff" CornerRadius="16" Padding="18" HasShadow="True">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Payment and Billing History" FontSize="16" FontAttributes="Bold" TextColor="#1e2445" />
+                    <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto,Auto">
+                        <Label Grid.Column="0" Grid.Row="0" Text="Date" FontAttributes="Bold" FontSize="13" TextColor="#4B91FF" />
+                        <Label Grid.Column="1" Grid.Row="0" Text="Method" FontAttributes="Bold" FontSize="13" TextColor="#4B91FF" />
+                        <Label Grid.Column="2" Grid.Row="0" Text="Amount" FontAttributes="Bold" FontSize="13" TextColor="#4B91FF" />
+                        <Label Grid.Column="0" Grid.Row="1" Text="2024-06-01" FontSize="13" TextColor="#1e2445" />
+                        <Label Grid.Column="1" Grid.Row="1" Text="Credit Card" FontSize="13" TextColor="#1e2445" />
+                        <Label Grid.Column="2" Grid.Row="1" Text="$120" FontSize="13" TextColor="#1e2445" />
+                        <Label Grid.Column="0" Grid.Row="2" Text="2024-05-01" FontSize="13" TextColor="#1e2445" />
+                        <Label Grid.Column="1" Grid.Row="2" Text="Cash" FontSize="13" TextColor="#1e2445" />
+                        <Label Grid.Column="2" Grid.Row="2" Text="$80" FontSize="13" TextColor="#1e2445" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- 6. Notes / Admin Remarks -->
+            <Frame BackgroundColor="#fff" CornerRadius="16" Padding="18" HasShadow="True">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Admin Notes / Remarks" FontSize="16" FontAttributes="Bold" TextColor="#1e2445" />
+                    <Editor Text="{Binding SelectedCustomer.AdminNotes}" Placeholder="Add notes, preferences, allergies..." HeightRequest="80" BackgroundColor="#eee" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- 7. Customer Analytics -->
+            <Frame BackgroundColor="#fff" CornerRadius="16" Padding="18" HasShadow="True">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Customer Analytics" FontSize="16" FontAttributes="Bold" TextColor="#1e2445" />
+                    <Label Text="Avg. Spend per Visit: $80" FontSize="13" TextColor="#2D3748" />
+                    <Label Text="Lifetime Value: $1,200" FontSize="13" TextColor="#2D3748" />
+                    <Frame BackgroundColor="#10b981" Padding="4,2" CornerRadius="8" HasShadow="False" HorizontalOptions="Start">
+                        <Label Text="Active" FontSize="12" TextColor="White" />
+                    </Frame>
+                </VerticalStackLayout>
+            </Frame>
         </VerticalStackLayout>
     </ScrollView>
 </ContentView>
