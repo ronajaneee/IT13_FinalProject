@@ -1,8 +1,10 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:microcharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              x:Class="IT13_FinalProject.ReportAnalyticsView">
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="24">
+
             <Label Text="Reports &amp; Analytics"
                    FontSize="28"
                    FontAttributes="Bold"
@@ -13,6 +15,9 @@
             <Frame BackgroundColor="#FFB84B" CornerRadius="16" Padding="18">
                 <VerticalStackLayout Spacing="8">
                     <Label Text="Sales Reports" FontSize="20" FontAttributes="Bold" TextColor="#1e2445" />
+                    <microcharts:ChartView x:Name="SalesChartView" HeightRequest="200" />
+                    <!-- Placeholder shown if chart initialization fails -->
+                    <Label x:Name="SalesChartPlaceholder" Text="Charts are not available on this platform." IsVisible="False" TextColor="White" HorizontalOptions="Center" />
                     <Label Text="Daily: $1,200" FontSize="16" TextColor="#1e2445" />
                     <Label Text="Weekly: $8,400" FontSize="16" TextColor="#1e2445" />
                     <Label Text="Monthly: $36,000" FontSize="16" TextColor="#1e2445" />
@@ -37,6 +42,7 @@
                     <Label Text="Top Loyal Customer: Alice Smith" FontSize="16" TextColor="White" />
                 </VerticalStackLayout>
             </Frame>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentView>
