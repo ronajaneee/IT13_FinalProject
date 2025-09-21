@@ -9,23 +9,70 @@
                    TextColor="#1e2445"
                    HorizontalOptions="Center" />
 
-            <Button Text="Record Payment" BackgroundColor="#4BCB4B" TextColor="White" CornerRadius="8" HeightRequest="44" HorizontalOptions="End" Margin="0,0,0,10" Clicked="OnAddPaymentClicked"/>
+            <!-- Record Payment Button -->
+            <Button Text="Record Payment"
+                    BackgroundColor="#4BCB4B"
+                    TextColor="White"
+                    CornerRadius="8"
+                    HeightRequest="44"
+                    HorizontalOptions="End"
+                    Margin="0,0,0,10"
+                    Clicked="OnAddPaymentClicked" />
 
+            <!-- Payments List -->
             <CollectionView ItemsSource="{Binding Payments}">
+                <CollectionView.ItemsLayout>
+                    <!-- Moderate spacing between payment entries -->
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="24" />
+                </CollectionView.ItemsLayout>
+
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame BackgroundColor="#2D3748" CornerRadius="12" Padding="12" Margin="0,0,0,10">
+                        <Frame BackgroundColor="#2D3748"
+                               CornerRadius="12"
+                               Padding="12"
+                               Margin="0,0,0,24">
+                            <!-- Moderate bottom margin -->
                             <VerticalStackLayout Spacing="6">
-                                <Label Text="{Binding CustomerName}" FontSize="18" FontAttributes="Bold" TextColor="White" />
-                                <Label Text="Appointment: {Binding AppointmentId}" FontSize="14" TextColor="#ccc" />
-                                <Label Text="Amount: {Binding Amount, StringFormat='${0:F2}'}" FontSize="14" TextColor="#FFB84B" />
-                                <Label Text="Method: {Binding Method}" FontSize="14" TextColor="WhiteSmoke" />
-                                <Label Text="Date: {Binding Date}" FontSize="12" TextColor="#999" />
-                                <HorizontalStackLayout Spacing="16">
-                                    <Button Text="Edit" BackgroundColor="#FFB84B" TextColor="#1e2445" CornerRadius="8" Clicked="OnEditPaymentClicked" />
-                                    <Button Text="Delete" BackgroundColor="#FF4B91" TextColor="White" CornerRadius="8" Clicked="OnDeletePaymentClicked" />
-                                    <Button Text="Receipt" BackgroundColor="#3b82f6" TextColor="White" CornerRadius="8" Clicked="OnViewReceiptClicked" />
-                                    <Button Text="History" BackgroundColor="#2D3748" TextColor="#4BCB4B" CornerRadius="8" Clicked="OnViewBillingHistoryClicked" />
+                                <Label Text="{Binding CustomerName}"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="White" />
+                                <Label Text="Appointment: {Binding AppointmentId}"
+                                       FontSize="14"
+                                       TextColor="#ccc" />
+                                <Label Text="Amount: {Binding Amount, StringFormat='${0:F2}'}"
+                                       FontSize="14"
+                                       TextColor="#FFB84B" />
+                                <Label Text="Method: {Binding Method}"
+                                       FontSize="14"
+                                       TextColor="WhiteSmoke" />
+                                <Label Text="Date: {Binding Date}"
+                                       FontSize="12"
+                                       TextColor="#999" />
+
+                                <!-- Action Buttons -->
+                                <HorizontalStackLayout Spacing="8">
+                                    <Button Text="Edit"
+                                            BackgroundColor="#FFB84B"
+                                            TextColor="#1e2445"
+                                            CornerRadius="8"
+                                            Clicked="OnEditPaymentClicked" />
+                                    <Button Text="Delete"
+                                            BackgroundColor="#FF4B91"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            Clicked="OnDeletePaymentClicked" />
+                                    <Button Text="Receipt"
+                                            BackgroundColor="#3b82f6"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            Clicked="OnViewReceiptClicked" />
+                                    <Button Text="History"
+                                            BackgroundColor="#2D3748"
+                                            TextColor="#4BCB4B"
+                                            CornerRadius="8"
+                                            Clicked="OnViewBillingHistoryClicked" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
                         </Frame>

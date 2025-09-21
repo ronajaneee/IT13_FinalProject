@@ -8,22 +8,73 @@
                    FontAttributes="Bold"
                    TextColor="#1e2445"
                    HorizontalOptions="Center" />
-            <Button Text="Add Staff" BackgroundColor="#4B91FF" TextColor="White" CornerRadius="8" HeightRequest="44" HorizontalOptions="End" Margin="0,0,0,10" Clicked="OnAddStaffClicked"/>
+
+            <!-- Add Staff Button -->
+            <Button Text="Add Staff"
+                    BackgroundColor="#4B91FF"
+                    TextColor="White"
+                    CornerRadius="8"
+                    HeightRequest="44"
+                    HorizontalOptions="End"
+                    Margin="0,0,0,10"
+                    Clicked="OnAddStaffClicked" />
+
+            <!-- Staff List -->
             <CollectionView ItemsSource="{Binding StaffList}">
+                <CollectionView.ItemsLayout>
+                    <!-- Moderate spacing between staff entries -->
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="24" />
+                </CollectionView.ItemsLayout>
+
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame BackgroundColor="#2D3748" CornerRadius="16" Padding="18" Margin="0,0,0,10">
+                        <Frame BackgroundColor="#2D3748"
+                               CornerRadius="16"
+                               Padding="18"
+                               Margin="0,0,0,24">
+                            <!-- Moderate bottom margin -->
                             <VerticalStackLayout Spacing="8">
-                                <Label Text="{Binding Name}" FontSize="20" FontAttributes="Bold" TextColor="White" />
-                                <Label Text="Role: {Binding Role}" FontSize="14" TextColor="#FFB84B" />
-                                <Label Text="Schedule: {Binding WorkSchedule}" FontSize="14" TextColor="WhiteSmoke" />
-                                <Label Text="Performance: {Binding Performance}" FontSize="14" TextColor="#ccc" />
-                                <HorizontalStackLayout Spacing="16">
-                                    <Button Text="Edit" BackgroundColor="#FFB84B" TextColor="#1e2445" CornerRadius="8" Clicked="OnEditStaffClicked" />
-                                    <Button Text="Delete" BackgroundColor="#FF4B91" TextColor="White" CornerRadius="8" Clicked="OnDeleteStaffClicked" />
-                                    <Button Text="Assign Role" BackgroundColor="#4B91FF" TextColor="White" CornerRadius="8" Clicked="OnAssignRoleClicked" />
-                                    <Button Text="Set Schedule" BackgroundColor="#2D3748" TextColor="#FFB84B" CornerRadius="8" Clicked="OnSetScheduleClicked" />
-                                    <Button Text="Performance" BackgroundColor="#2D3748" TextColor="#4B91FF" CornerRadius="8" Clicked="OnViewPerformanceClicked" />
+                                <Label Text="{Binding Name}"
+                                       FontSize="20"
+                                       FontAttributes="Bold"
+                                       TextColor="White" />
+                                <Label Text="Role: {Binding Role}"
+                                       FontSize="14"
+                                       TextColor="#FFB84B" />
+                                <Label Text="Schedule: {Binding WorkSchedule}"
+                                       FontSize="14"
+                                       TextColor="WhiteSmoke" />
+                                <Label Text="Performance: {Binding Performance}"
+                                       FontSize="14"
+                                       TextColor="#ccc" />
+
+                                <!-- Action Buttons -->
+                                <HorizontalStackLayout Spacing="10">
+                                    <Button Text="Edit"
+                                            BackgroundColor="#FFB84B"
+                                            TextColor="#1e2445"
+                                            CornerRadius="8"
+                                            Clicked="OnEditStaffClicked" />
+                                    <Button Text="Delete"
+                                            BackgroundColor="#FF4B91"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            Clicked="OnDeleteStaffClicked" />
+                                    <Button Text="Assign Role"
+                                            BackgroundColor="#4B91FF"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            Clicked="OnAssignRoleClicked" />
+                                    <Button Text="Set Schedule"
+                                            BackgroundColor="#2D3748"
+                                            TextColor="#FFB84B"
+                                            CornerRadius="8"
+                                            Clicked="OnSetScheduleClicked" />
+                                    <Button Text="Performance"
+                                            BackgroundColor="#2D3748"
+                                            TextColor="#4B91FF"
+                                            CornerRadius="8"
+                                            Clicked="OnViewPerformanceClicked" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
                         </Frame>

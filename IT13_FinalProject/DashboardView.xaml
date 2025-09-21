@@ -1,4 +1,4 @@
-<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:microcharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              x:Class="IT13_FinalProject.DashboardView">
@@ -11,7 +11,7 @@
                    HorizontalOptions="Center" />
             
             <!-- Quick Stats Grid -->
-            <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto" ColumnSpacing="18" RowSpacing="18">
+            <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto" ColumnSpacing="24" RowSpacing="18">
                 <!-- Bookings Card -->
                 <Frame Grid.Column="0" Grid.Row="0" BackgroundColor="#FF4B91" CornerRadius="16" Padding="18" HasShadow="True">
                     <VerticalStackLayout>
@@ -60,7 +60,7 @@
                 <Frame Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" BackgroundColor="#2D3748" CornerRadius="16" Padding="18" HasShadow="True">
                     <VerticalStackLayout Spacing="8">
                         <Label Text="Notifications" FontSize="18" FontAttributes="Bold" TextColor="White" />
-                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="8">
+                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="12" RowSpacing="8">
                             <Label Grid.Row="0" Grid.Column="0" Text="??" FontSize="16"/>
                             <Label Grid.Row="0" Grid.Column="1" Text="3 new messages" FontSize="16" TextColor="WhiteSmoke" />
                             <Label Grid.Row="1" Grid.Column="0" Text="??" FontSize="16"/>
@@ -73,7 +73,7 @@
             </Grid>
 
             <!-- Analytics Section -->
-            <Grid ColumnDefinitions="*,*" ColumnSpacing="18">
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="24">
                 <!-- Bookings Chart -->
                 <Frame Grid.Column="0" BackgroundColor="#2D3748" CornerRadius="16" Padding="18" HasShadow="True">
                     <VerticalStackLayout>
@@ -93,7 +93,7 @@
 
             <!-- Customer Insights -->
             <Frame BackgroundColor="#1e2445" CornerRadius="16" Padding="18" HasShadow="True">
-                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="18">
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="24">
                     <VerticalStackLayout Grid.Column="0">
                         <Label Text="New Customers" FontSize="16" TextColor="White"/>
                         <Label Text="40" FontSize="24" FontAttributes="Bold" TextColor="#90EE90"/>
@@ -112,7 +112,7 @@
                     <Label Text="Active Staff" FontSize="18" FontAttributes="Bold" TextColor="White"/>
                     <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="12">
                         <!-- Staff Member 1 -->
-                        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
+                        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
                             <Frame Grid.Column="0" CornerRadius="20" HeightRequest="40" WidthRequest="40" Padding="0"
                                    BackgroundColor="#FF4B91">
                                 <Label Text="A" HorizontalOptions="Center" VerticalOptions="Center"
@@ -128,7 +128,7 @@
                         </Grid>
                         
                         <!-- Staff Member 2 -->
-                        <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto">
+                        <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
                             <Frame Grid.Column="0" CornerRadius="20" HeightRequest="40" WidthRequest="40" Padding="0"
                                    BackgroundColor="#4B9BFF">
                                 <Label Text="J" HorizontalOptions="Center" VerticalOptions="Center"
@@ -144,7 +144,7 @@
                         </Grid>
                         
                         <!-- Staff Member 3 -->
-                        <Grid Grid.Row="2" ColumnDefinitions="Auto,*,Auto">
+                        <Grid Grid.Row="2" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
                             <Frame Grid.Column="0" CornerRadius="20" HeightRequest="40" WidthRequest="40" Padding="0"
                                    BackgroundColor="#FFB84B">
                                 <Label Text="M" HorizontalOptions="Center" VerticalOptions="Center"
@@ -167,7 +167,7 @@
                 <VerticalStackLayout Spacing="12">
                     <Label Text="Upcoming Appointments" FontSize="18" FontAttributes="Bold" TextColor="White"/>
                     <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="12">
-                        <Grid Grid.Row="0" ColumnDefinitions="*,*,Auto,Auto">
+                        <Grid Grid.Row="0" ColumnDefinitions="*,*,Auto,Auto" ColumnSpacing="12">
                             <Label Grid.Column="0" Text="Sarah Miller" TextColor="White"/>
                             <Label Grid.Column="1" Text="Massage" TextColor="WhiteSmoke"/>
                             <Label Grid.Column="2" Text="2:00 PM" TextColor="WhiteSmoke"/>
@@ -175,7 +175,7 @@
                                 <Label Text="Confirmed" TextColor="#1e2445" FontSize="12"/>
                             </Frame>
                         </Grid>
-                        <Grid Grid.Row="1" ColumnDefinitions="*,*,Auto,Auto">
+                        <Grid Grid.Row="1" ColumnDefinitions="*,*,Auto,Auto" ColumnSpacing="12">
                             <Label Grid.Column="0" Text="James Wilson" TextColor="White"/>
                             <Label Grid.Column="1" Text="Facial" TextColor="WhiteSmoke"/>
                             <Label Grid.Column="2" Text="3:30 PM" TextColor="WhiteSmoke"/>
@@ -183,7 +183,7 @@
                                 <Label Text="Pending" TextColor="#1e2445" FontSize="12"/>
                             </Frame>
                         </Grid>
-                        <Grid Grid.Row="2" ColumnDefinitions="*,*,Auto,Auto">
+                        <Grid Grid.Row="2" ColumnDefinitions="*,*,Auto,Auto" ColumnSpacing="12">
                             <Label Grid.Column="0" Text="Emma Davis" TextColor="White"/>
                             <Label Grid.Column="1" Text="Hair Spa" TextColor="WhiteSmoke"/>
                             <Label Grid.Column="2" Text="4:15 PM" TextColor="WhiteSmoke"/>

@@ -9,24 +9,73 @@
                    TextColor="#1e2445"
                    HorizontalOptions="Center" />
 
-            <Button Text="Add Appointment" BackgroundColor="#4BCB4B" TextColor="White" CornerRadius="8" HeightRequest="44" HorizontalOptions="End" Margin="0,0,0,10" Clicked="OnAddAppointmentClicked"/>
+            <!-- Add Appointment Button -->
+            <Button Text="Add Appointment"
+                    BackgroundColor="#4BCB4B"
+                    TextColor="White"
+                    CornerRadius="8"
+                    HeightRequest="44"
+                    HorizontalOptions="End"
+                    Margin="0,0,0,10"
+                    Clicked="OnAddAppointmentClicked" />
 
+            <!-- Appointment List -->
             <CollectionView ItemsSource="{Binding Appointments}">
+                <CollectionView.ItemsLayout>
+                    <!-- Moderate spacing between appointment entries -->
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="24" />
+                </CollectionView.ItemsLayout>
+
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame BackgroundColor="#2D3748" CornerRadius="12" Padding="12" Margin="0,0,0,10">
+                        <Frame BackgroundColor="#2D3748"
+                               CornerRadius="12"
+                               Padding="12"
+                               Margin="0,0,0,24">
+                            <!-- Moderate bottom margin -->
                             <VerticalStackLayout Spacing="6">
-                                <Label Text="{Binding AppointmentId}" FontSize="14" TextColor="#ccc" />
-                                <Label Text="{Binding ServiceName}" FontSize="18" FontAttributes="Bold" TextColor="White" />
-                                <Label Text="Customer: {Binding CustomerName}" FontSize="14" TextColor="#ccc" />
-                                <Label Text="Date/Time: {Binding DateTime}" FontSize="14" TextColor="#FFB84B" />
-                                <Label Text="Status: {Binding Status}" FontSize="14" TextColor="WhiteSmoke" />
-                                <Label Text="Assigned Staff: {Binding AssignedStaff}" FontSize="14" TextColor="#ccc" />
-                                <HorizontalStackLayout Spacing="16">
-                                    <Button Text="Approve" BackgroundColor="#3b82f6" TextColor="White" CornerRadius="8" Clicked="OnApproveClicked" />
-                                    <Button Text="Reschedule" BackgroundColor="#FFB84B" TextColor="#1e2445" CornerRadius="8" Clicked="OnRescheduleClicked" />
-                                    <Button Text="Cancel" BackgroundColor="#FF4B91" TextColor="White" CornerRadius="8" Clicked="OnCancelClicked" />
-                                    <Button Text="Assign Staff" BackgroundColor="#4B91FF" TextColor="White" CornerRadius="8" Clicked="OnAssignStaffClicked" />
+                                <Label Text="{Binding AppointmentId}"
+                                       FontSize="14"
+                                       TextColor="#ccc" />
+                                <Label Text="{Binding ServiceName}"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="White" />
+                                <Label Text="Customer: {Binding CustomerName}"
+                                       FontSize="14"
+                                       TextColor="#ccc" />
+                                <Label Text="Date/Time: {Binding DateTime}"
+                                       FontSize="14"
+                                       TextColor="#FFB84B" />
+                                <Label Text="Status: {Binding Status}"
+                                       FontSize="14"
+                                       TextColor="WhiteSmoke" />
+                                <Label Text="Assigned Staff: {Binding AssignedStaff}"
+                                       FontSize="14"
+                                       TextColor="#ccc" />
+
+                                <!-- Action Buttons -->
+                                <HorizontalStackLayout Spacing="8">
+                                    <Button Text="Approve"
+                                            BackgroundColor="#3b82f6"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            Clicked="OnApproveClicked" />
+                                    <Button Text="Reschedule"
+                                            BackgroundColor="#FFB84B"
+                                            TextColor="#1e2445"
+                                            CornerRadius="8"
+                                            Clicked="OnRescheduleClicked" />
+                                    <Button Text="Cancel"
+                                            BackgroundColor="#FF4B91"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            Clicked="OnCancelClicked" />
+                                    <Button Text="Assign Staff"
+                                            BackgroundColor="#4B91FF"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            Clicked="OnAssignStaffClicked" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
                         </Frame>
