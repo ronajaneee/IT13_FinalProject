@@ -1,3 +1,4 @@
+using Microsoft.Maui.Controls;
 using System.Collections.ObjectModel;
 
 namespace IT13_FinalProject;
@@ -71,10 +72,10 @@ public partial class PaymentManagementView : ContentView
 
 public class Payment
 {
-    public string PaymentId { get; set; }
-    public string CustomerName { get; set; }
-    public string AppointmentId { get; set; }
+    public string PaymentId { get; set; } = string.Empty;
+    public string CustomerName { get; set; } = string.Empty;
+    public string AppointmentId { get; set; } = string.Empty;
     public decimal Amount { get; set; }
-    public string Method { get; set; }
-    public string Date { get; set; }
+    public string Method { get; set; } = string.Empty;
+    public string Date { get; set; } = string.Empty;
 }

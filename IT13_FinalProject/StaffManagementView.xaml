@@ -1,6 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="IT13_FinalProject.StaffManagementView">
+             x:Class="IT13_FinalProject.StaffManagementView"
+             xmlns:local="clr-namespace:IT13_FinalProject">
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="24">
             <Label Text="Staff Management"
@@ -9,74 +11,103 @@
                    TextColor="#1e2445"
                    HorizontalOptions="Center" />
 
-            <!-- Add Staff Button -->
-            <Button Text="Add Staff"
-                    BackgroundColor="#4B91FF"
-                    TextColor="White"
-                    CornerRadius="8"
-                    HeightRequest="44"
-                    HorizontalOptions="End"
-                    Margin="0,0,0,10"
-                    Clicked="OnAddStaffClicked" />
+            <!-- Search Section -->
+            <Frame BackgroundColor="#4B91FF"
+                   CornerRadius="16"
+                   Padding="18"
+                   Margin="0,0,0,12">
+                <Grid RowSpacing="12" ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Entry Placeholder="Search staff..."
+                           PlaceholderColor="LightGray"
+                           TextColor="White"
+                           Grid.Column="0" />
+
+                    <Button Text="Add New"
+                            Grid.Column="1"
+                            BackgroundColor="#FFB84B"
+                            TextColor="White"
+                            CornerRadius="8"
+                            Command="{Binding AddStaffCommand}" />
+                </Grid>
+            </Frame>
 
             <!-- Staff List -->
             <CollectionView ItemsSource="{Binding StaffList}">
                 <CollectionView.ItemsLayout>
-                    <!-- Moderate spacing between staff entries -->
                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="24" />
                 </CollectionView.ItemsLayout>
 
                 <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame BackgroundColor="#2D3748"
+                    <DataTemplate x:DataType="local:Staff">
+                        <Frame Margin="0,0,0,24"
+                               BackgroundColor="#2D3748"
                                CornerRadius="16"
-                               Padding="18"
-                               Margin="0,0,0,24">
-                            <!-- Moderate bottom margin -->
-                            <VerticalStackLayout Spacing="8">
-                                <Label Text="{Binding Name}"
-                                       FontSize="20"
-                                       FontAttributes="Bold"
-                                       TextColor="White" />
-                                <Label Text="Role: {Binding Role}"
-                                       FontSize="14"
-                                       TextColor="#FFB84B" />
-                                <Label Text="Schedule: {Binding WorkSchedule}"
-                                       FontSize="14"
-                                       TextColor="WhiteSmoke" />
-                                <Label Text="Performance: {Binding Performance}"
-                                       FontSize="14"
-                                       TextColor="#ccc" />
+                               Padding="20"
+                               HasShadow="False">
+                            <Grid RowSpacing="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <!-- Name -->
+                                <VerticalStackLayout Grid.Row="0" Spacing="4">
+                                    <Label Text="{Binding FirstName}" 
+                                           FontSize="18"
+                                           FontAttributes="Bold"
+                                           TextColor="White" />
+                                    <Label Text="{Binding LastName}"
+                                           FontSize="16"
+                                           TextColor="White" />
+                                </VerticalStackLayout>
+
+                                <!-- Contact Info -->
+                                <VerticalStackLayout Grid.Row="1" Spacing="6" Margin="0,6,0,0">
+                                    <Label Text="{Binding Position, StringFormat='Role: {0}'}"
+                                           FontSize="14" 
+                                           TextColor="#FFB84B" />
+                                    <Label Text="{Binding Email, StringFormat='Email: {0}'}"
+                                           FontSize="14" 
+                                           TextColor="#4B91FF" />
+                                    <Label Text="{Binding Phone, StringFormat='Phone: {0}'}"
+                                           FontSize="14"
+                                           TextColor="WhiteSmoke" />
+                                    <Label Text="{Binding Status, StringFormat='Status: {0}'}"
+                                           FontSize="14"
+                                           TextColor="#FFB84B" />
+                                </VerticalStackLayout>
 
                                 <!-- Action Buttons -->
-                                <HorizontalStackLayout Spacing="10">
+                                <HorizontalStackLayout Grid.Row="2"
+                                                       Spacing="16"
+                                                       Margin="0,12,0,0"
+                                                       HorizontalOptions="Start">
+                                    <Button Text="View"
+                                            BackgroundColor="#4B91FF"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type local:StaffManagementView}}, Path=BindingContext.ViewStaffCommand}"
+                                            CommandParameter="{Binding .}" />
                                     <Button Text="Edit"
                                             BackgroundColor="#FFB84B"
-                                            TextColor="#1e2445"
+                                            TextColor="White"
                                             CornerRadius="8"
-                                            Clicked="OnEditStaffClicked" />
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type local:StaffManagementView}}, Path=BindingContext.EditStaffCommand}"
+                                            CommandParameter="{Binding .}" />
                                     <Button Text="Delete"
                                             BackgroundColor="#FF4B91"
                                             TextColor="White"
                                             CornerRadius="8"
-                                            Clicked="OnDeleteStaffClicked" />
-                                    <Button Text="Assign Role"
-                                            BackgroundColor="#4B91FF"
-                                            TextColor="White"
-                                            CornerRadius="8"
-                                            Clicked="OnAssignRoleClicked" />
-                                    <Button Text="Set Schedule"
-                                            BackgroundColor="#2D3748"
-                                            TextColor="#FFB84B"
-                                            CornerRadius="8"
-                                            Clicked="OnSetScheduleClicked" />
-                                    <Button Text="Performance"
-                                            BackgroundColor="#2D3748"
-                                            TextColor="#4B91FF"
-                                            CornerRadius="8"
-                                            Clicked="OnViewPerformanceClicked" />
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type local:StaffManagementView}}, Path=BindingContext.DeleteStaffCommand}"
+                                            CommandParameter="{Binding .}" />
                                 </HorizontalStackLayout>
-                            </VerticalStackLayout>
+                            </Grid>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

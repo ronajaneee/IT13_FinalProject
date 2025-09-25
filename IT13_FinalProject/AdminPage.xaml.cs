@@ -4,7 +4,7 @@ namespace IT13_FinalProject;
 
 public partial class AdminPage : ContentPage, INotifyPropertyChanged
 {
-    public event PropertyChangedEventHandler? PropertyChanged;
+    public new event PropertyChangedEventHandler? PropertyChanged;
 
     private bool isSidebarExpanded = false;
     private bool sidebarLabelVisible = false;

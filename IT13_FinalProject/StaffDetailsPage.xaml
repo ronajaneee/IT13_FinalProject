@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IT13_FinalProject.StaffDetailsPage"
+             Title="Staff Details">
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="18">
+            <!-- Staff Info Card -->
+            <Frame BackgroundColor="#2D3748"
+                   CornerRadius="16"
+                   Padding="20"
+                   HasShadow="False">
+                <VerticalStackLayout Spacing="16">
+                    <!-- Name Section -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label x:Name="NameLabel"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               TextColor="White" />
+                        <Label x:Name="RoleLabel"
+                               FontSize="18"
+                               TextColor="#FFB84B" />
+                    </VerticalStackLayout>
+
+                    <!-- Contact Info -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label x:Name="EmailLabel"
+                               FontSize="16"
+                               TextColor="#4B91FF" />
+                        <Label x:Name="PhoneLabel"
+                               FontSize="16"
+                               TextColor="WhiteSmoke" />
+                        <Label x:Name="StatusLabel"
+                               FontSize="16"
+                               TextColor="#FFB84B" />
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Recent Activities Section -->
+            <Frame BackgroundColor="#2D3748"
+                   CornerRadius="16"
+                   Padding="20"
+                   HasShadow="False"
+                   Margin="0,12,0,0">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Recent Activities"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="White" />
+                    <BoxView Color="#4B91FF"
+                            HeightRequest="1"
+                            HorizontalOptions="Fill" />
+                    <VerticalStackLayout x:Name="ActivitiesStack"
+                                       Spacing="8">
+                        <!-- Activities will be added here dynamically -->
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Back Button -->
+            <Button Text="Back to Staff List"
+                    BackgroundColor="#4B91FF"
+                    TextColor="White"
+                    CornerRadius="8"
+                    Margin="0,24,0,0"
+                    Clicked="OnBackClicked"
+                    HeightRequest="50" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,10 +1,15 @@
+using Microsoft.Maui.Controls;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
 
 namespace IT13_FinalProject;
 
-public partial class ServiceManagementView : ContentView
+public partial class ServiceManagementView : ContentView, INotifyPropertyChanged
 {
     public ObservableCollection<Service> Services { get; set; } = new();
+    public ObservableCollection<Service> FilteredServices { get; set; } = new();
+    public event PropertyChangedEventHandler PropertyChanged;
 
     public ServiceManagementView()
     {
@@ -15,50 +20,53 @@ public partial class ServiceManagementView : ContentView
         Services.Add(new Service { Name = "Facial", Price = 35.00m, Duration = "45 mins", Description = "Rejuvenating facial treatment" });
         Services.Add(new Service { Name = "Hair Treatment", Price = 40.00m, Duration = "50 mins", Description = "Deep conditioning hair treatment" });
 
+        FilteredServices = new ObservableCollection<Service>(Services);
         BindingContext = this;
     }
 
-    private void OnAddServiceClicked(object sender, EventArgs e)
+    private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
     {
-        Services.Add(new Service { Name = "New Service", Price = 0.00m, Duration = "0 mins", Description = "Description" });
+        string searchText = e.NewTextValue?.ToLower() ?? "";
+        var filtered = Services.Where(s => s.Name.ToLower().Contains(searchText)).ToList();
+        FilteredServices.Clear();
+        foreach (var service in filtered)
+            FilteredServices.Add(service);
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FilteredServices)));
     }
 
-    private void OnEditServiceClicked(object sender, EventArgs e)
+    private async void OnAddServiceClicked(object sender, EventArgs e)
+    {
+        await Application.Current.MainPage.Navigation.PushAsync(new AddServicePage(Services, FilteredServices));
+    }
+
+    private async void OnEditServiceClicked(object sender, EventArgs e)
     {
         if (sender is Button btn && btn.BindingContext is Service service)
         {
-            service.Name += " (Edited)";
+            await Application.Current.MainPage.Navigation.PushAsync(new EditServicePage(service));
         }
     }
 
-    private void OnDeleteServiceClicked(object sender, EventArgs e)
+    private async void OnViewServiceClicked(object sender, EventArgs e)
     {
         if (sender is Button btn && btn.BindingContext is Service service)
         {
-            Services.Remove(service);
+            await Application.Current.MainPage.Navigation.PushAsync(new ServiceDetailsPage(service));
         }
     }
 
-    private async void OnUpdatePriceClicked(object sender, EventArgs e)
+    private async void OnDeleteServiceClicked(object sender, EventArgs e)
     {
         if (sender is Button btn && btn.BindingContext is Service service)
         {
-            string result = await Application.Current.MainPage.DisplayPromptAsync($"Update Price for {service.Name}", "Enter new price:", keyboard: Keyboard.Numeric);
-            if (decimal.TryParse(result, out var newPrice))
+            bool confirm = await Application.Current.MainPage.DisplayAlert(
+                "Confirm Delete",
+                $"Are you sure you want to delete {service.Name}?",
+                "Yes", "No");
+            if (confirm)
             {
-                service.Price = newPrice;
-            }
-        }
-    }
-
-    private async void OnUpdateDurationClicked(object sender, EventArgs e)
-    {
-        if (sender is Button btn && btn.BindingContext is Service service)
-        {
-            string newDuration = await Application.Current.MainPage.DisplayPromptAsync($"Update Duration for {service.Name}", "Enter new duration (e.g., 60 mins):");
-            if (!string.IsNullOrEmpty(newDuration))
-            {
-                service.Duration = newDuration;
+                Services.Remove(service);
+                FilteredServices.Remove(service);
             }
         }
     }

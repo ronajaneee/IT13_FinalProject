@@ -64,9 +64,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microcharts.Maui" Version="1.0.1" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.5" />
+	  <PackageReference Include="CommunityToolkit.Maui" Version="7.0.0" />
+	  <PackageReference Include="Microcharts.Maui" Version="1.0.0" />
+	  <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.9" />
+	  <PackageReference Include="SkiaSharp.Views.Maui.Controls.Compatibility" Version="2.88.9" />
+	  <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.90" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -76,7 +78,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="AddAppointmentPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="AdminPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="AppointmentDetailsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="AppointmentManagementView.xaml">
@@ -88,6 +96,12 @@
 	  <MauiXaml Update="DashboardView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="EditAppointmentPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="EditStaffPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -95,6 +109,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="ReportAnalyticsView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Resources\GlobalNamespaces.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="ServiceManagementView.xaml">

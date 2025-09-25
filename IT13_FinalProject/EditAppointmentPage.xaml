@@ -1,0 +1,24 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IT13_FinalProject.EditAppointmentPage"
+             Title="Edit Appointment">
+    <VerticalStackLayout Padding="24" Spacing="18">
+        <Label Text="Edit Appointment" FontSize="28" FontAttributes="Bold" TextColor="#1e2445" HorizontalOptions="Center" />
+        <Entry x:Name="CustomerEntry" Placeholder="Customer Name" />
+        <Entry x:Name="ServiceEntry" Placeholder="Service" />
+        <Entry x:Name="StaffEntry" Placeholder="Staff Assigned" />
+        <Entry x:Name="DateEntry" Placeholder="Date (yyyy-MM-dd HH:mm)" />
+        <Picker x:Name="StatusPicker" Title="Status">
+            <Picker.ItemsSource>
+                <x:Array Type="x:String">
+                    <x:String>Confirmed</x:String>
+                    <x:String>Pending</x:String>
+                    <x:String>Completed</x:String>
+                    <x:String>Cancelled</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+        <Button Text="Save" Clicked="OnSaveClicked" BackgroundColor="#FFB84B" TextColor="#1e2445" CornerRadius="8" />
+        <Button Text="Back" Clicked="OnBackClicked" BackgroundColor="#FF4B91" TextColor="White" CornerRadius="8" />
+    </VerticalStackLayout>
+</ContentPage>

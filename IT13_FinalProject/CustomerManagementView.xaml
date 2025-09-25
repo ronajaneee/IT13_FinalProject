@@ -1,24 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="IT13_FinalProject.CustomerManagementView">
+             x:Class="IT13_FinalProject.CustomerManagementView"
+             xmlns:local="clr-namespace:IT13_FinalProject">
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="16">
+        <VerticalStackLayout Padding="24" Spacing="24">
             <Label Text="Customer Management"
                    FontSize="28"
                    FontAttributes="Bold"
                    TextColor="#1e2445"
-                   HorizontalOptions="Center"
-                   Margin="0,0,0,10" />
+                   HorizontalOptions="Center" />
 
-            <Button Text="Add Customer"
-                    BackgroundColor="#FF4B91"
-                    TextColor="White"
-                    CornerRadius="8"
-                    HeightRequest="44"
-                    HorizontalOptions="End"
-                    Margin="0,0,0,16"
-                    Clicked="OnAddCustomerClicked" />
+            <!-- Search Section -->
+            <Frame BackgroundColor="#4B91FF"
+                   CornerRadius="16"
+                   Padding="18"
+                   Margin="0,0,0,12">
+                <Grid RowSpacing="12" ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
+                    <Entry Placeholder="Search customers..."
+                           PlaceholderColor="LightGray"
+                           TextColor="White"
+                           TextChanged="OnSearchTextChanged"
+                           Grid.Column="0" />
+
+                    <Button Text="Add New"
+                            Grid.Column="1"
+                            BackgroundColor="#FFB84B"
+                            TextColor="White"
+                            CornerRadius="8"
+                            Command="{Binding AddCustomerCommand}" />
+                </Grid>
+            </Frame>
+
+            <!-- Customers List -->
             <CollectionView ItemsSource="{Binding Customers}">
                 <CollectionView.ItemsLayout>
                     <!-- Moderate spacing between customer cards -->
@@ -26,55 +45,69 @@
                 </CollectionView.ItemsLayout>
 
                 <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame BackgroundColor="#2D3748"
+                    <DataTemplate x:DataType="local:Customer">
+                        <Frame Margin="0,0,0,24"
+                               BackgroundColor="#2D3748"
                                CornerRadius="16"
-                               Padding="16"
-                               Margin="0,0,0,24"
+                               Padding="20"
                                HasShadow="False">
-                            <VerticalStackLayout Spacing="12">
-                                <Label Text="{Binding Name}"
-                                       FontSize="20"
-                                       FontAttributes="Bold"
-                                       TextColor="White" />
-                                <Label Text="Contact: {Binding ContactDetails}"
-                                       FontSize="14"
-                                       TextColor="WhiteSmoke" />
-                                <Label Text="Loyalty Points: {Binding LoyaltyPoints}"
-                                       FontSize="14"
-                                       TextColor="#FFB84B" />
-                                <Label Text="Booking History: {Binding BookingHistory}"
-                                       FontSize="14"
-                                       TextColor="#ccc" />
+                            <Grid RowSpacing="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
 
-                                <!-- Buttons with moderate spacing between columns -->
-                                <Grid ColumnSpacing="16" Margin="0,8,0,0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
+                                <!-- Name -->
+                                <VerticalStackLayout Grid.Row="0" Spacing="4">
+                                    <Label Text="{Binding FirstName}" 
+                                           FontSize="18"
+                                           FontAttributes="Bold"
+                                           TextColor="White" />
+                                    <Label Text="{Binding LastName}"
+                                           FontSize="16"
+                                           TextColor="White" />
+                                </VerticalStackLayout>
 
-                                    <Button Grid.Column="0"
-                                            Text="Edit"
-                                            BackgroundColor="#FFB84B"
-                                            TextColor="#1e2445"
+                                <!-- Contact Info -->
+                                <VerticalStackLayout Grid.Row="1" Spacing="6" Margin="0,6,0,0">
+                                    <Label Text="{Binding Email, StringFormat='Email: {0}'}"
+                                           FontSize="14" 
+                                           TextColor="#FFB84B" />
+                                    <Label Text="{Binding Phone, StringFormat='Phone: {0}'}"
+                                           FontSize="14" 
+                                           TextColor="WhiteSmoke" />
+                                    <Label Text="{Binding Address, StringFormat='Address: {0}'}"
+                                           FontSize="14"
+                                           TextColor="#4B91FF" />
+                                </VerticalStackLayout>
+
+                                <!-- Action Buttons -->
+                                <HorizontalStackLayout Grid.Row="2"
+                                                       Spacing="16"
+                                                       Margin="0,12,0,0"
+                                                       HorizontalOptions="Start">
+                                    <!-- Left aligned -->
+                                    <Button Text="View"
+                                            BackgroundColor="#4B91FF"
+                                            TextColor="White"
                                             CornerRadius="8"
-                                            Clicked="OnEditCustomerClicked" />
-                                    <Button Grid.Column="1"
-                                            Text="Delete"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type local:CustomerManagementView}}, Path=BindingContext.ViewCustomerCommand}"
+                                            CommandParameter="{Binding .}" />
+                                    <Button Text="Edit"
+                                            BackgroundColor="#FFB84B"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type local:CustomerManagementView}}, Path=BindingContext.EditCustomerCommand}"
+                                            CommandParameter="{Binding .}" />
+                                    <Button Text="Delete"
                                             BackgroundColor="#FF4B91"
                                             TextColor="White"
                                             CornerRadius="8"
-                                            Clicked="OnDeleteCustomerClicked" />
-                                    <Button Grid.Column="2"
-                                            Text="History"
-                                            BackgroundColor="#2D3748"
-                                            TextColor="#FF4B91"
-                                            CornerRadius="8"
-                                            Clicked="OnViewHistoryClicked" />
-                                </Grid>
-                            </VerticalStackLayout>
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type local:CustomerManagementView}}, Path=BindingContext.DeleteCustomerCommand}"
+                                            CommandParameter="{Binding .}" />
+                                </HorizontalStackLayout>
+                            </Grid>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

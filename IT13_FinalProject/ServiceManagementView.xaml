@@ -9,20 +9,35 @@
                    TextColor="#1e2445"
                    HorizontalOptions="Center" />
 
-            <!-- Add Service Button -->
-            <Button Text="Add Service"
-                    BackgroundColor="#4BCB4B"
-                    TextColor="White"
-                    CornerRadius="8"
-                    HeightRequest="44"
-                    HorizontalOptions="End"
-                    Margin="0,0,0,10"
-                    Clicked="OnAddServiceClicked" />
+            <!-- Search Bar + Add Button -->
+            <Frame BackgroundColor="#4B91FF"
+                   CornerRadius="16"
+                   Padding="18"
+                   Margin="0,0,0,12">
+                <Grid RowSpacing="12" ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Entry Placeholder="Search services..."
+                           PlaceholderColor="LightGray"
+                           TextColor="White"
+                           TextChanged="OnSearchTextChanged"
+                           Grid.Column="0" />
+
+                    <Button Text="Add Service"
+                            Grid.Column="1"
+                            BackgroundColor="#FFB84B"
+                            TextColor="White"
+                            CornerRadius="8"
+                            Clicked="OnAddServiceClicked" />
+                </Grid>
+            </Frame>
 
             <!-- Service List -->
-            <CollectionView ItemsSource="{Binding Services}">
+            <CollectionView ItemsSource="{Binding FilteredServices}">
                 <CollectionView.ItemsLayout>
-                    <!-- Moderate spacing between service entries -->
                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="24" />
                 </CollectionView.ItemsLayout>
 
@@ -32,7 +47,6 @@
                                CornerRadius="16"
                                Padding="18"
                                Margin="0,0,0,24">
-                            <!-- Moderate bottom margin -->
                             <VerticalStackLayout Spacing="8">
                                 <Label Text="{Binding Name}"
                                        FontSize="20"
@@ -50,6 +64,11 @@
 
                                 <!-- Action Buttons -->
                                 <HorizontalStackLayout Spacing="10">
+                                    <Button Text="View"
+                                            BackgroundColor="#4B91FF"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            Clicked="OnViewServiceClicked" />
                                     <Button Text="Edit"
                                             BackgroundColor="#FFB84B"
                                             TextColor="#1e2445"
@@ -60,16 +79,6 @@
                                             TextColor="White"
                                             CornerRadius="8"
                                             Clicked="OnDeleteServiceClicked" />
-                                    <Button Text="Update Price"
-                                            BackgroundColor="#4BCB4B"
-                                            TextColor="#1e2445"
-                                            CornerRadius="8"
-                                            Clicked="OnUpdatePriceClicked" />
-                                    <Button Text="Update Duration"
-                                            BackgroundColor="#2D3748"
-                                            TextColor="#4BCB4B"
-                                            CornerRadius="8"
-                                            Clicked="OnUpdateDurationClicked" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
                         </Frame>

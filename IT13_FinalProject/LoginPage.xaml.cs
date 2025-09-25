@@ -12,8 +12,8 @@ public partial class LoginPage : ContentPage
         if (usernameEntry.Text == "admin" && passwordEntry.Text == "1234")
         {
             await DisplayAlert("Success", "Login successful!", "OK");
-            // Set AdminPage as the new MainPage after login
-            Application.Current.MainPage = new AdminPage();
+            // Set AdminPage as the new MainPage after login, wrapped in NavigationPage
+            Application.Current.MainPage = new NavigationPage(new AdminPage());
         }
         else
         {
