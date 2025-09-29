@@ -2,7 +2,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using Microsoft.Maui.Controls;
-using IT13_FinalProject; // Use the model from Models/Appointment.cs
+using CommunityToolkit.Maui.Views;
+using IT13_FinalProject;
 
 namespace IT13_FinalProject;
 
@@ -15,8 +16,6 @@ public partial class AppointmentManagementView : ContentView, INotifyPropertyCha
     public AppointmentManagementView()
     {
         InitializeComponent();
-
-        // Hardcoded example appointments
         Appointments.Add(new Appointment {
             AppointmentId = "A1001",
             CustomerName = "Anna Smith",
@@ -68,29 +67,42 @@ public partial class AppointmentManagementView : ContentView, INotifyPropertyCha
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FilteredAppointments)));
     }
 
-    private async void OnAddAppointmentClicked(object sender, EventArgs e)
+    private void OnAddAppointmentClicked(object sender, EventArgs e)
     {
-        await Application.Current.MainPage.Navigation.PushAsync(new AddAppointmentPage(Appointments, FilteredAppointments));
+        var modal = new AddAppointmentModal(Appointments, FilteredAppointments);
+        Application.Current.MainPage.ShowPopup(modal);
     }
 
-    private async void OnEditAppointmentClicked(object sender, EventArgs e)
+    private void OnEditAppointmentClicked(object sender, EventArgs e)
     {
+        if (UserSession.Role == "Staff")
+        {
+            Application.Current.MainPage.DisplayAlert("Access Denied", "Staff can only update status, not edit full details.", "OK");
+            return;
+        }
         if (sender is Button btn && btn.BindingContext is Appointment appt)
         {
-            await Application.Current.MainPage.Navigation.PushAsync(new EditAppointmentPage(appt));
+            var modal = new EditAppointmentModal(appt);
+            Application.Current.MainPage.ShowPopup(modal);
         }
     }
 
-    private async void OnViewDetailsClicked(object sender, EventArgs e)
+    private void OnViewDetailsClicked(object sender, EventArgs e)
     {
         if (sender is Button btn && btn.BindingContext is Appointment appt)
         {
-            await Application.Current.MainPage.Navigation.PushAsync(new AppointmentDetailsPage(appt));
+            var modal = new ViewAppointmentModal(appt);
+            Application.Current.MainPage.ShowPopup(modal);
         }
     }
 
     private async void OnDeleteAppointmentClicked(object sender, EventArgs e)
     {
+        if (UserSession.Role == "Staff")
+        {
+            await Application.Current.MainPage.DisplayAlert("Access Denied", "Staff cannot delete appointments.", "OK");
+            return;
+        }
         if (sender is Button btn && btn.BindingContext is Appointment appt)
         {
             bool confirm = await Application.Current.MainPage.DisplayAlert(

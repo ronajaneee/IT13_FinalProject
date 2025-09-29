@@ -84,26 +84,34 @@
 
                                 <!-- Action Buttons -->
                                 <HorizontalStackLayout Grid.Row="2"
-                                                       Spacing="16"
+                                                       Spacing="12"
                                                        Margin="0,12,0,0"
                                                        HorizontalOptions="Start">
-                                    <!-- Left aligned -->
                                     <Button Text="View"
-                                            BackgroundColor="#4B91FF"
+                                            BackgroundColor="#2D3748"
                                             TextColor="White"
                                             CornerRadius="8"
+                                            HeightRequest="44"
+                                            FontSize="16"
+                                            Padding="16,0"
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type local:CustomerManagementView}}, Path=BindingContext.ViewCustomerCommand}"
                                             CommandParameter="{Binding .}" />
                                     <Button Text="Edit"
-                                            BackgroundColor="#FFB84B"
+                                            BackgroundColor="#4B91FF"
                                             TextColor="White"
                                             CornerRadius="8"
+                                            HeightRequest="44"
+                                            FontSize="16"
+                                            Padding="16,0"
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type local:CustomerManagementView}}, Path=BindingContext.EditCustomerCommand}"
                                             CommandParameter="{Binding .}" />
                                     <Button Text="Delete"
                                             BackgroundColor="#FF4B91"
                                             TextColor="White"
                                             CornerRadius="8"
+                                            HeightRequest="44"
+                                            FontSize="16"
+                                            Padding="16,0"
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type local:CustomerManagementView}}, Path=BindingContext.DeleteCustomerCommand}"
                                             CommandParameter="{Binding .}" />
                                 </HorizontalStackLayout>

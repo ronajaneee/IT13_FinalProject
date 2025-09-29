@@ -65,26 +65,38 @@
                                     <Label Grid.Row="2" Grid.Column="0" Text="Date:" FontAttributes="Bold" TextColor="#FFB84B" />
                                     <Label Grid.Row="2" Grid.Column="1" Text="{Binding AppointmentDateTimeString}" TextColor="WhiteSmoke" />
                                 </Grid>
-                                <HorizontalStackLayout Spacing="10" Margin="0,10,0,0">
+                                <HorizontalStackLayout Spacing="12" Margin="0,10,0,0">
                                     <Button Text="View Details"
+                                            BackgroundColor="#2D3748"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            HeightRequest="44"
+                                            FontSize="16"
+                                            Padding="16,0"
+                                            Clicked="OnViewDetailsClicked" />
+                                    <Button Text="Edit"
                                             BackgroundColor="#4B91FF"
                                             TextColor="White"
                                             CornerRadius="8"
-                                            Clicked="OnViewDetailsClicked" />
-                                    <Button Text="Edit"
-                                            BackgroundColor="#FFB84B"
-                                            TextColor="#1e2445"
-                                            CornerRadius="8"
+                                            HeightRequest="44"
+                                            FontSize="16"
+                                            Padding="16,0"
                                             Clicked="OnEditAppointmentClicked" />
                                     <Button Text="Delete"
                                             BackgroundColor="#FF4B91"
                                             TextColor="White"
                                             CornerRadius="8"
+                                            HeightRequest="44"
+                                            FontSize="16"
+                                            Padding="16,0"
                                             Clicked="OnDeleteAppointmentClicked" />
                                     <Button Text="Status"
                                             BackgroundColor="#4BCB4B"
                                             TextColor="#1e2445"
                                             CornerRadius="8"
+                                            HeightRequest="44"
+                                            FontSize="16"
+                                            Padding="16,0"
                                             Clicked="OnStatusUpdateClicked" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>

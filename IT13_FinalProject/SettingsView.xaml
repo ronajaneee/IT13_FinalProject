@@ -11,7 +11,7 @@
                    TextColor="White"
                    HorizontalOptions="Center" />
 
-			<!-- Admin Profile Update -->
+			<!-- Admin/Staff Profile Update -->
 			<Frame BackgroundColor="#243056" CornerRadius="16" Padding="18">
 				<VerticalStackLayout Spacing="10">
 					<Label Text="Update Profile" FontSize="20" FontAttributes="Bold" TextColor="#3b82f6" />
@@ -23,8 +23,8 @@
 				</VerticalStackLayout>
 			</Frame>
 
-			<!-- Staff/Admin Account Management -->
-			<Frame BackgroundColor="#1f2937" CornerRadius="16" Padding="18">
+			<!-- Staff/Admin Account Management (Visible only for Admin) -->
+			<Frame BackgroundColor="#1f2937" CornerRadius="16" Padding="18" IsVisible="{Binding IsAdmin}">
 				<VerticalStackLayout Spacing="10">
 					<Label Text="Manage Staff/Admin Accounts" FontSize="20" FontAttributes="Bold" TextColor="#10b981" />
 					<Button Text="Add Account" BackgroundColor="#3b82f6" TextColor="White" CornerRadius="8" Clicked="OnAddAccountClicked" />
@@ -47,6 +47,16 @@
 					</CollectionView>
 				</VerticalStackLayout>
 			</Frame>
+
+			<!-- Logout Button -->
+			<Button Text="Logout"
+                    BackgroundColor="#FF4B91"
+                    TextColor="White"
+                    CornerRadius="8"
+                    HeightRequest="50"
+                    Clicked="OnLogoutClicked"
+                    HorizontalOptions="FillAndExpand"
+                    Margin="0,10,0,0" />
 
 		</VerticalStackLayout>
 	</ScrollView>

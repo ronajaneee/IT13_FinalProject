@@ -31,7 +31,7 @@
                             BackgroundColor="#FFB84B"
                             TextColor="White"
                             CornerRadius="8"
-                            Clicked="OnAddServiceClicked" />
+                            Command="{Binding AddServiceCommand}" />
                 </Grid>
             </Frame>
 
@@ -63,22 +63,34 @@
                                        TextColor="#ccc" />
 
                                 <!-- Action Buttons -->
-                                <HorizontalStackLayout Spacing="10">
+                                <HorizontalStackLayout Spacing="12">
                                     <Button Text="View"
+                                            BackgroundColor="#2D3748"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            HeightRequest="44"
+                                            FontSize="16"
+                                            Padding="16,0"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentView}}, Path=BindingContext.ViewServiceCommand}"
+                                            CommandParameter="{Binding .}" />
+                                    <Button Text="Edit"
                                             BackgroundColor="#4B91FF"
                                             TextColor="White"
                                             CornerRadius="8"
-                                            Clicked="OnViewServiceClicked" />
-                                    <Button Text="Edit"
-                                            BackgroundColor="#FFB84B"
-                                            TextColor="#1e2445"
-                                            CornerRadius="8"
-                                            Clicked="OnEditServiceClicked" />
+                                            HeightRequest="44"
+                                            FontSize="16"
+                                            Padding="16,0"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentView}}, Path=BindingContext.EditServiceCommand}"
+                                            CommandParameter="{Binding .}" />
                                     <Button Text="Delete"
                                             BackgroundColor="#FF4B91"
                                             TextColor="White"
                                             CornerRadius="8"
-                                            Clicked="OnDeleteServiceClicked" />
+                                            HeightRequest="44"
+                                            FontSize="16"
+                                            Padding="16,0"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentView}}, Path=BindingContext.DeleteServiceCommand}"
+                                            CommandParameter="{Binding .}" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
                         </Frame>
