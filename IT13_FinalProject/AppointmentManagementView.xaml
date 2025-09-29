@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="IT13_FinalProject.AppointmentManagementView">
@@ -9,24 +10,94 @@
                    TextColor="#1e2445"
                    HorizontalOptions="Center" />
 
-            <Button Text="Add Appointment" BackgroundColor="#4BCB4B" TextColor="White" CornerRadius="8" HeightRequest="44" HorizontalOptions="End" Margin="0,0,0,10" Clicked="OnAddAppointmentClicked"/>
+            <!-- Search Bar + Add Button -->
+            <Frame BackgroundColor="#4B91FF"
+                   CornerRadius="16"
+                   Padding="18"
+                   Margin="0,0,0,12">
+                <Grid RowSpacing="12" ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-            <CollectionView ItemsSource="{Binding Appointments}">
+                    <Entry Placeholder="Search appointments..."
+                           PlaceholderColor="LightGray"
+                           TextColor="White"
+                           TextChanged="OnSearchTextChanged"
+                           Grid.Column="0" />
+
+                    <Button Text="Add Appointment"
+                            Grid.Column="1"
+                            BackgroundColor="#FFB84B"
+                            TextColor="White"
+                            CornerRadius="8"
+                            Clicked="OnAddAppointmentClicked" />
+                </Grid>
+            </Frame>
+
+            <!-- Appointment Summary List -->
+            <CollectionView ItemsSource="{Binding FilteredAppointments}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="16" />
+                </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame BackgroundColor="#2D3748" CornerRadius="12" Padding="12" Margin="0,0,0,10">
-                            <VerticalStackLayout Spacing="6">
-                                <Label Text="{Binding AppointmentId}" FontSize="14" TextColor="#ccc" />
-                                <Label Text="{Binding ServiceName}" FontSize="18" FontAttributes="Bold" TextColor="White" />
-                                <Label Text="Customer: {Binding CustomerName}" FontSize="14" TextColor="#ccc" />
-                                <Label Text="Date/Time: {Binding DateTime}" FontSize="14" TextColor="#FFB84B" />
-                                <Label Text="Status: {Binding Status}" FontSize="14" TextColor="WhiteSmoke" />
-                                <Label Text="Assigned Staff: {Binding AssignedStaff}" FontSize="14" TextColor="#ccc" />
-                                <HorizontalStackLayout Spacing="16">
-                                    <Button Text="Approve" BackgroundColor="#3b82f6" TextColor="White" CornerRadius="8" Clicked="OnApproveClicked" />
-                                    <Button Text="Reschedule" BackgroundColor="#FFB84B" TextColor="#1e2445" CornerRadius="8" Clicked="OnRescheduleClicked" />
-                                    <Button Text="Cancel" BackgroundColor="#FF4B91" TextColor="White" CornerRadius="8" Clicked="OnCancelClicked" />
-                                    <Button Text="Assign Staff" BackgroundColor="#4B91FF" TextColor="White" CornerRadius="8" Clicked="OnAssignStaffClicked" />
+                        <Frame BackgroundColor="#2D3748"
+                               CornerRadius="12"
+                               Padding="14"
+                               Margin="0,0,0,12">
+                            <VerticalStackLayout Spacing="8">
+                                <Grid RowSpacing="6" ColumnSpacing="8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" Grid.Column="0" Text="ID:" FontAttributes="Bold" TextColor="#FFB84B" />
+                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding AppointmentId}" TextColor="White" />
+                                    <Label Grid.Row="1" Grid.Column="0" Text="Customer:" FontAttributes="Bold" TextColor="#FFB84B" />
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding CustomerName}" TextColor="White" />
+                                    <Label Grid.Row="2" Grid.Column="0" Text="Date:" FontAttributes="Bold" TextColor="#FFB84B" />
+                                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding AppointmentDateTimeString}" TextColor="WhiteSmoke" />
+                                </Grid>
+                                <HorizontalStackLayout Spacing="12" Margin="0,10,0,0">
+                                    <Button Text="View Details"
+                                            BackgroundColor="#2D3748"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            HeightRequest="44"
+                                            FontSize="16"
+                                            Padding="16,0"
+                                            Clicked="OnViewDetailsClicked" />
+                                    <Button Text="Edit"
+                                            BackgroundColor="#4B91FF"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            HeightRequest="44"
+                                            FontSize="16"
+                                            Padding="16,0"
+                                            Clicked="OnEditAppointmentClicked" />
+                                    <Button Text="Delete"
+                                            BackgroundColor="#FF4B91"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            HeightRequest="44"
+                                            FontSize="16"
+                                            Padding="16,0"
+                                            Clicked="OnDeleteAppointmentClicked" />
+                                    <Button Text="Status"
+                                            BackgroundColor="#4BCB4B"
+                                            TextColor="#1e2445"
+                                            CornerRadius="8"
+                                            HeightRequest="44"
+                                            FontSize="16"
+                                            Padding="16,0"
+                                            Clicked="OnStatusUpdateClicked" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
                         </Frame>

@@ -1,6 +1,12 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:IT13_FinalProject.ViewModels"
              x:Class="IT13_FinalProject.PaymentManagementView">
+    
+    <ContentView.BindingContext>
+        <viewmodels:PaymentManagementViewModel />
+    </ContentView.BindingContext>
+    
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="24">
             <Label Text="Payments &amp; Billing"
@@ -9,23 +15,87 @@
                    TextColor="#1e2445"
                    HorizontalOptions="Center" />
 
-            <Button Text="Record Payment" BackgroundColor="#4BCB4B" TextColor="White" CornerRadius="8" HeightRequest="44" HorizontalOptions="End" Margin="0,0,0,10" Clicked="OnAddPaymentClicked"/>
+            <Frame BackgroundColor="#4B91FF"
+                   CornerRadius="16"
+                   Padding="18"
+                   Margin="0,0,0,12">
+                <Grid RowSpacing="12" ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
+                    <Entry Placeholder="Search by customer or service..."
+                           PlaceholderColor="LightGray"
+                           TextColor="White"
+                           TextChanged="OnSearchTextChanged"
+                           Grid.Column="0" />
+
+                    <Button Text="Add Payment"
+                            Grid.Column="1"
+                            BackgroundColor="#FFB84B"
+                            TextColor="White"
+                            CornerRadius="8"
+                            Command="{Binding AddPaymentCommand}" />
+                </Grid>
+            </Frame>
+
+            <!-- Payments List -->
             <CollectionView ItemsSource="{Binding Payments}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="24" />
+                </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame BackgroundColor="#2D3748" CornerRadius="12" Padding="12" Margin="0,0,0,10">
+                        <Frame BackgroundColor="#2D3748"
+                               CornerRadius="12"
+                               Padding="12"
+                               Margin="0,0,0,24">
                             <VerticalStackLayout Spacing="6">
                                 <Label Text="{Binding CustomerName}" FontSize="18" FontAttributes="Bold" TextColor="White" />
-                                <Label Text="Appointment: {Binding AppointmentId}" FontSize="14" TextColor="#ccc" />
-                                <Label Text="Amount: {Binding Amount, StringFormat='${0:F2}'}" FontSize="14" TextColor="#FFB84B" />
-                                <Label Text="Method: {Binding Method}" FontSize="14" TextColor="WhiteSmoke" />
-                                <Label Text="Date: {Binding Date}" FontSize="12" TextColor="#999" />
-                                <HorizontalStackLayout Spacing="16">
-                                    <Button Text="Edit" BackgroundColor="#FFB84B" TextColor="#1e2445" CornerRadius="8" Clicked="OnEditPaymentClicked" />
-                                    <Button Text="Delete" BackgroundColor="#FF4B91" TextColor="White" CornerRadius="8" Clicked="OnDeletePaymentClicked" />
-                                    <Button Text="Receipt" BackgroundColor="#3b82f6" TextColor="White" CornerRadius="8" Clicked="OnViewReceiptClicked" />
-                                    <Button Text="History" BackgroundColor="#2D3748" TextColor="#4BCB4B" CornerRadius="8" Clicked="OnViewBillingHistoryClicked" />
+                                <Label Text="{Binding ServiceName, StringFormat='Service: {0}'}" FontSize="14" TextColor="#ccc" />
+                                <Label Text="{Binding AppointmentId, StringFormat='Appointment: {0}'}" FontSize="14" TextColor="#ccc" />
+                                <Label Text="{Binding Amount, StringFormat='Amount: ${0:F2}'}" FontSize="14" TextColor="#FFB84B" />
+                                <Label Text="{Binding PaymentMethod, StringFormat='Method: {0}'}" FontSize="14" TextColor="WhiteSmoke" />
+                                <Label Text="{Binding PaymentDate, StringFormat='Date: {0}'}" FontSize="12" TextColor="#999" />
+                                <Label Text="{Binding Status, StringFormat='Status: {0}'}" FontSize="12" TextColor="#4BCB4B" />
+                                <HorizontalStackLayout Spacing="12">
+                                    <Button Text="Edit"
+                                            BackgroundColor="#4B91FF"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            HeightRequest="44"
+                                            FontSize="16"
+                                            Padding="16,0"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PaymentManagementViewModel}}, Path=EditPaymentCommand}"
+                                            CommandParameter="{Binding .}" />
+                                    <Button Text="Delete"
+                                            BackgroundColor="#FF4B91"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            HeightRequest="44"
+                                            FontSize="16"
+                                            Padding="16,0"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PaymentManagementViewModel}}, Path=DeletePaymentCommand}"
+                                            CommandParameter="{Binding .}" />
+                                    <Button Text="Receipt"
+                                            BackgroundColor="#2D3748"
+                                            TextColor="#4BCB4B"
+                                            CornerRadius="8"
+                                            HeightRequest="44"
+                                            FontSize="16"
+                                            Padding="16,0"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PaymentManagementViewModel}}, Path=ViewReceiptCommand}"
+                                            CommandParameter="{Binding .}" />
+                                    <Button Text="History"
+                                            BackgroundColor="#2D3748"
+                                            TextColor="#4BCB4B"
+                                            CornerRadius="8"
+                                            HeightRequest="44"
+                                            FontSize="16"
+                                            Padding="16,0"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PaymentManagementViewModel}}, Path=ViewHistoryCommand}"
+                                            CommandParameter="{Binding .}" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
                         </Frame>

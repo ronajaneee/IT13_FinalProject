@@ -6,6 +6,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <local:StringConverter x:Key="StringConverter"/>
+            <local:PendingStatusToEnabledConverter x:Key="PendingStatusToEnabledConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

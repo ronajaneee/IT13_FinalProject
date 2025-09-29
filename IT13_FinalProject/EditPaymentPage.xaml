@@ -1,0 +1,36 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IT13_FinalProject.EditPaymentPage"
+             Title="Edit Payment">
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="18">
+            <Label Text="Edit Payment" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" />
+            <Entry x:Name="CustomerNameEntry" Placeholder="Customer Name" />
+            <Entry x:Name="ServiceNameEntry" Placeholder="Service Name" />
+            <Entry x:Name="AmountEntry" Placeholder="Amount" Keyboard="Numeric" />
+            <Picker x:Name="PaymentMethodPicker" Title="Payment Method">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Cash</x:String>
+                        <x:String>Card</x:String>
+                        <x:String>E-Wallet</x:String>
+                        <x:String>GCash</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+            <DatePicker x:Name="PaymentDatePicker" />
+            <Picker x:Name="StatusPicker" Title="Status">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Paid</x:String>
+                        <x:String>Pending</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+            <HorizontalStackLayout Spacing="12" HorizontalOptions="Center">
+                <Button Text="Save Changes" Clicked="OnSaveClicked" BackgroundColor="#4B91FF" TextColor="White" CornerRadius="8" HeightRequest="44" FontSize="16" Padding="16,0" WidthRequest="140" />
+                <Button Text="Cancel" Clicked="OnCancelClicked" BackgroundColor="#FF4B91" TextColor="White" CornerRadius="8" HeightRequest="44" FontSize="16" Padding="16,0" WidthRequest="140" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

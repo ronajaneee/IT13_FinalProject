@@ -9,22 +9,88 @@
                    TextColor="#1e2445"
                    HorizontalOptions="Center" />
 
-            <Button Text="Add Service" BackgroundColor="#4BCB4B" TextColor="White" CornerRadius="8" HeightRequest="44" HorizontalOptions="End" Margin="0,0,0,10" Clicked="OnAddServiceClicked"/>
+            <!-- Search Bar + Add Button -->
+            <Frame BackgroundColor="#4B91FF"
+                   CornerRadius="16"
+                   Padding="18"
+                   Margin="0,0,0,12">
+                <Grid RowSpacing="12" ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-            <CollectionView ItemsSource="{Binding Services}">
+                    <Entry Placeholder="Search services..."
+                           PlaceholderColor="LightGray"
+                           TextColor="White"
+                           TextChanged="OnSearchTextChanged"
+                           Grid.Column="0" />
+
+                    <Button Text="Add Service"
+                            Grid.Column="1"
+                            BackgroundColor="#FFB84B"
+                            TextColor="White"
+                            CornerRadius="8"
+                            Command="{Binding AddServiceCommand}" />
+                </Grid>
+            </Frame>
+
+            <!-- Service List -->
+            <CollectionView ItemsSource="{Binding FilteredServices}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="24" />
+                </CollectionView.ItemsLayout>
+
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame BackgroundColor="#2D3748" CornerRadius="16" Padding="18" Margin="0,0,0,10">
+                        <Frame BackgroundColor="#2D3748"
+                               CornerRadius="16"
+                               Padding="18"
+                               Margin="0,0,0,24">
                             <VerticalStackLayout Spacing="8">
-                                <Label Text="{Binding Name}" FontSize="20" FontAttributes="Bold" TextColor="White" />
-                                <Label Text="Price: {Binding Price, StringFormat='${0:F2}'}" FontSize="14" TextColor="#FFB84B" />
-                                <Label Text="Duration: {Binding Duration}" FontSize="14" TextColor="WhiteSmoke" />
-                                <Label Text="Description: {Binding Description}" FontSize="14" TextColor="#ccc" />
-                                <HorizontalStackLayout Spacing="16">
-                                    <Button Text="Edit" BackgroundColor="#FFB84B" TextColor="#1e2445" CornerRadius="8" Clicked="OnEditServiceClicked" />
-                                    <Button Text="Delete" BackgroundColor="#FF4B91" TextColor="White" CornerRadius="8" Clicked="OnDeleteServiceClicked" />
-                                    <Button Text="Update Price" BackgroundColor="#4BCB4B" TextColor="#1e2445" CornerRadius="8" Clicked="OnUpdatePriceClicked" />
-                                    <Button Text="Update Duration" BackgroundColor="#2D3748" TextColor="#4BCB4B" CornerRadius="8" Clicked="OnUpdateDurationClicked" />
+                                <Label Text="{Binding Name}"
+                                       FontSize="20"
+                                       FontAttributes="Bold"
+                                       TextColor="White" />
+                                <Label Text="Price: {Binding Price, StringFormat='${0:F2}'}"
+                                       FontSize="14"
+                                       TextColor="#FFB84B" />
+                                <Label Text="Duration: {Binding Duration}"
+                                       FontSize="14"
+                                       TextColor="WhiteSmoke" />
+                                <Label Text="Description: {Binding Description}"
+                                       FontSize="14"
+                                       TextColor="#ccc" />
+
+                                <!-- Action Buttons -->
+                                <HorizontalStackLayout Spacing="12">
+                                    <Button Text="View"
+                                            BackgroundColor="#2D3748"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            HeightRequest="44"
+                                            FontSize="16"
+                                            Padding="16,0"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentView}}, Path=BindingContext.ViewServiceCommand}"
+                                            CommandParameter="{Binding .}" />
+                                    <Button Text="Edit"
+                                            BackgroundColor="#4B91FF"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            HeightRequest="44"
+                                            FontSize="16"
+                                            Padding="16,0"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentView}}, Path=BindingContext.EditServiceCommand}"
+                                            CommandParameter="{Binding .}" />
+                                    <Button Text="Delete"
+                                            BackgroundColor="#FF4B91"
+                                            TextColor="White"
+                                            CornerRadius="8"
+                                            HeightRequest="44"
+                                            FontSize="16"
+                                            Padding="16,0"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentView}}, Path=BindingContext.DeleteServiceCommand}"
+                                            CommandParameter="{Binding .}" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
                         </Frame>

@@ -1,0 +1,26 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IT13_FinalProject.AddAppointmentPage"
+             Title="Add Appointment">
+    <VerticalStackLayout Padding="24" Spacing="18">
+        <Label Text="Add Appointment" FontSize="28" FontAttributes="Bold" TextColor="#1e2445" HorizontalOptions="Center" />
+        <Entry x:Name="CustomerEntry" Placeholder="Customer Name" />
+        <Entry x:Name="ServiceEntry" Placeholder="Service" />
+        <Entry x:Name="StaffEntry" Placeholder="Staff Assigned" />
+        <Entry x:Name="DateEntry" Placeholder="Date (yyyy-MM-dd HH:mm)" />
+        <Picker x:Name="StatusPicker" Title="Status">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Confirmed</x:String>
+                    <x:String>Pending</x:String>
+                    <x:String>Completed</x:String>
+                    <x:String>Cancelled</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+        <HorizontalStackLayout Spacing="12" HorizontalOptions="Center">
+            <Button Text="Save" Clicked="OnSaveClicked" BackgroundColor="#4BCB4B" TextColor="White" CornerRadius="8" HeightRequest="44" FontSize="16" Padding="16,0" WidthRequest="140" />
+            <Button Text="Back" Clicked="OnBackClicked" BackgroundColor="#FF4B91" TextColor="White" CornerRadius="8" HeightRequest="44" FontSize="16" Padding="16,0" WidthRequest="140" />
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

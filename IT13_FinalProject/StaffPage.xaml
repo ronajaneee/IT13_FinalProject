@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IT13_FinalProject.StaffPage"
+             Title="Staff Dashboard"
+             BackgroundColor="#1e2445">
+
+    <ContentPage.Resources>
+        <Style x:Key="SidebarButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="TextColor" Value="#ccc"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <Setter.Value>
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal"/>
+                            <VisualState x:Name="PointerOver">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#2a2f4d"/>
+                                    <Setter Property="TextColor" Value="White"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#3b82f6"/>
+                                    <Setter Property="TextColor" Value="White"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar -->
+        <Grid x:Name="Sidebar" Grid.Column="0" WidthRequest="{Binding SidebarWidth}" VerticalOptions="FillAndExpand">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#1a1f3c" Offset="0.0"/>
+                    <GradientStop Color="#151934" Offset="1.0"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+
+            <VerticalStackLayout Padding="10" Spacing="15" VerticalOptions="FillAndExpand">
+                <!-- Toggle Button -->
+                <Button x:Name="SidebarToggleButton"
+                        Text="?"
+                        BackgroundColor="Transparent"
+                        TextColor="White"
+                        Clicked="OnSidebarToggleClicked"
+                        HeightRequest="40" WidthRequest="40"
+                        HorizontalOptions="Start"/>
+
+                <!-- Logo and Label -->
+                <HorizontalStackLayout Spacing="10" VerticalOptions="Start" IsVisible="{Binding SidebarLabelVisible}">
+                    <Frame BackgroundColor="#ff69b4"
+                           HeightRequest="40" WidthRequest="40"
+                           CornerRadius="10" HasShadow="False">
+                        <Image Source="logo.png" HeightRequest="24"/>
+                    </Frame>
+                    <Label Text="LuxeSpa" FontAttributes="Bold" FontSize="20" TextColor="White" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+
+                <!-- Staff Info -->
+                <Frame BackgroundColor="#00000020" Padding="10" CornerRadius="12" IsVisible="{Binding SidebarLabelVisible}">
+                    <HorizontalStackLayout Spacing="10">
+                        <Image Source="staff.png" HeightRequest="40" WidthRequest="40" Aspect="AspectFill"/>
+                        <VerticalStackLayout>
+                            <Label Text="Staff User" TextColor="White" FontSize="14"/>
+                            <Label Text="Staff" TextColor="#ccc" FontSize="12"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </Frame>
+
+                <!-- Navigation -->
+                <ScrollView IsVisible="{Binding SidebarLabelVisible}" VerticalOptions="FillAndExpand">
+                    <VerticalStackLayout Spacing="5">
+                        <Button x:Name="BtnDashboard" Text="Dashboard" Style="{StaticResource SidebarButtonStyle}" Clicked="OnNavButtonClicked"/>
+                        <Button x:Name="BtnCustomers" Text="Customers" Style="{StaticResource SidebarButtonStyle}" Clicked="OnNavButtonClicked"/>
+                        <Button x:Name="BtnServices" Text="Services" Style="{StaticResource SidebarButtonStyle}" Clicked="OnNavButtonClicked"/>
+                        <Button x:Name="BtnAppointments" Text="Appointments" Style="{StaticResource SidebarButtonStyle}" Clicked="OnNavButtonClicked"/>
+                        <Button x:Name="BtnPayments" Text="Payments" Style="{StaticResource SidebarButtonStyle}" Clicked="OnNavButtonClicked"/>
+                        <Button x:Name="BtnSettings" Text="Settings" Style="{StaticResource SidebarButtonStyle}" Clicked="OnNavButtonClicked"/>
+                        <Button x:Name="BtnLogout" Text="Logout" Style="{StaticResource SidebarButtonStyle}" Clicked="OnLogoutClicked"/>
+                    </VerticalStackLayout>
+                </ScrollView>
+            </VerticalStackLayout>
+        </Grid>
+
+        <!-- Main Content -->
+        <ContentView x:Name="MainContent" Grid.Column="1" BackgroundColor="#0a192f" VerticalOptions="FillAndExpand"/>
+    </Grid>
+</ContentPage>

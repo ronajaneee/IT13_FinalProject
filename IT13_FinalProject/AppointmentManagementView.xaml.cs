@@ -1,83 +1,136 @@
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using Microsoft.Maui.Controls;
+using IT13_FinalProject; // Use the model from Models/Appointment.cs
 
 namespace IT13_FinalProject;
 
-public partial class AppointmentManagementView : ContentView
+public partial class AppointmentManagementView : ContentView, INotifyPropertyChanged
 {
     public ObservableCollection<Appointment> Appointments { get; set; } = new();
-    public ObservableCollection<string> StaffNames { get; set; } = new();
+    public ObservableCollection<Appointment> FilteredAppointments { get; set; } = new();
+    public event PropertyChangedEventHandler PropertyChanged;
 
     public AppointmentManagementView()
     {
         InitializeComponent();
 
-        // Hardcoded staff names (should match StaffManagementView example)
-        StaffNames.Add("Jane Doe");
-        StaffNames.Add("John Smith");
-        StaffNames.Add("Emily Clark");
-
-        // Hardcoded appointments
-        Appointments.Add(new Appointment { AppointmentId = "A100", ServiceName = "Massage", CustomerName = "Alice Smith", DateTime = "2025-08-10 10:00", Status = "Pending", AssignedStaff = "" });
-        Appointments.Add(new Appointment { AppointmentId = "A101", ServiceName = "Facial", CustomerName = "Bob Johnson", DateTime = "2025-08-11 14:00", Status = "Approved", AssignedStaff = "Jane Doe" });
-        Appointments.Add(new Appointment { AppointmentId = "A102", ServiceName = "Hair Treatment", CustomerName = "Carol Lee", DateTime = "2025-08-12 09:00", Status = "Pending", AssignedStaff = "" });
-
+        // Hardcoded example appointments
+        Appointments.Add(new Appointment {
+            AppointmentId = "A1001",
+            CustomerName = "Anna Smith",
+            ServiceName = "Massage",
+            AssignedStaff = "David Chen",
+            AppointmentDateTimeString = "2024-06-10 10:00",
+            Status = "Confirmed"
+        });
+        Appointments.Add(new Appointment {
+            AppointmentId = "A1002",
+            CustomerName = "John Doe",
+            ServiceName = "Facial",
+            AssignedStaff = "Maria Garcia",
+            AppointmentDateTimeString = "2024-06-10 11:30",
+            Status = "Pending"
+        });
+        Appointments.Add(new Appointment {
+            AppointmentId = "A1003",
+            CustomerName = "Sarah Johnson",
+            ServiceName = "Hair Treatment",
+            AssignedStaff = "Anna Smith",
+            AppointmentDateTimeString = "2024-06-11 09:00",
+            Status = "Completed"
+        });
+        Appointments.Add(new Appointment {
+            AppointmentId = "A1004",
+            CustomerName = "Maria Garcia",
+            ServiceName = "Massage",
+            AssignedStaff = "David Chen",
+            AppointmentDateTimeString = "2024-06-11 14:00",
+            Status = "Cancelled"
+        });
+        FilteredAppointments = new ObservableCollection<Appointment>(Appointments);
         BindingContext = this;
     }
 
-    private void OnAddAppointmentClicked(object sender, EventArgs e)
+    private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
     {
-        Appointments.Add(new Appointment { AppointmentId = "A" + (Appointments.Count + 100), ServiceName = "New Service", CustomerName = "New Customer", DateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm"), Status = "Pending", AssignedStaff = "" });
+        string searchText = e.NewTextValue?.ToLower() ?? "";
+        var filtered = Appointments.Where(a =>
+            (a.CustomerName?.ToLower().Contains(searchText) ?? false) ||
+            (a.ServiceName?.ToLower().Contains(searchText) ?? false) ||
+            (a.AssignedStaff?.ToLower().Contains(searchText) ?? false) ||
+            (a.AppointmentDateTimeString?.ToLower().Contains(searchText) ?? false)
+        ).ToList();
+        FilteredAppointments.Clear();
+        foreach (var appt in filtered)
+            FilteredAppointments.Add(appt);
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FilteredAppointments)));
     }
 
-    private void OnApproveClicked(object sender, EventArgs e)
+    private async void OnAddAppointmentClicked(object sender, EventArgs e)
     {
+        // Staff and Admin can add
+        await Application.Current.MainPage.Navigation.PushAsync(new AddAppointmentPage(Appointments, FilteredAppointments));
+    }
+
+    private async void OnEditAppointmentClicked(object sender, EventArgs e)
+    {
+        if (UserSession.Role == "Staff")
+        {
+            await Application.Current.MainPage.DisplayAlert("Access Denied", "Staff can only update status, not edit full details.", "OK");
+            return;
+        }
         if (sender is Button btn && btn.BindingContext is Appointment appt)
         {
-            appt.Status = "Approved";
+            await Application.Current.MainPage.Navigation.PushAsync(new EditAppointmentPage(appt));
         }
     }
 
-    private async void OnRescheduleClicked(object sender, EventArgs e)
+    private async void OnViewDetailsClicked(object sender, EventArgs e)
     {
         if (sender is Button btn && btn.BindingContext is Appointment appt)
         {
-            string newDate = await Application.Current.MainPage.DisplayPromptAsync("Reschedule", "Enter new date/time (yyyy-MM-dd HH:mm):");
-            if (!string.IsNullOrEmpty(newDate))
+            await Application.Current.MainPage.Navigation.PushAsync(new AppointmentDetailsPage(appt));
+        }
+    }
+
+    private async void OnDeleteAppointmentClicked(object sender, EventArgs e)
+    {
+        if (UserSession.Role == "Staff")
+        {
+            await Application.Current.MainPage.DisplayAlert("Access Denied", "Staff cannot delete appointments.", "OK");
+            return;
+        }
+        if (sender is Button btn && btn.BindingContext is Appointment appt)
+        {
+            bool confirm = await Application.Current.MainPage.DisplayAlert(
+                "Confirm Delete",
+                $"Are you sure you want to delete appointment {appt.AppointmentId}?",
+                "Yes", "No");
+            if (confirm)
             {
-                appt.DateTime = newDate;
-                appt.Status = "Rescheduled";
+                Appointments.Remove(appt);
+                FilteredAppointments.Remove(appt);
             }
         }
     }
 
-    private void OnCancelClicked(object sender, EventArgs e)
+    private async void OnStatusUpdateClicked(object sender, EventArgs e)
     {
+        // Both Admin and Staff can update status
         if (sender is Button btn && btn.BindingContext is Appointment appt)
         {
-            appt.Status = "Cancelled";
-        }
-    }
-
-    private async void OnAssignStaffClicked(object sender, EventArgs e)
-    {
-        if (sender is Button btn && btn.BindingContext is Appointment appt)
-        {
-            string selected = await Application.Current.MainPage.DisplayActionSheet($"Assign Staff for {appt.AppointmentId}", "Cancel", null, StaffNames.ToArray());
-            if (!string.IsNullOrEmpty(selected) && selected != "Cancel")
+            string newStatus = await Application.Current.MainPage.DisplayActionSheet(
+                "Update Status",
+                "Cancel",
+                null,
+                "Confirmed", "Pending", "Completed", "Cancelled");
+            if (!string.IsNullOrEmpty(newStatus) && newStatus != "Cancel")
             {
-                appt.AssignedStaff = selected;
-                appt.Status = "Assigned";
+                appt.Status = newStatus;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FilteredAppointments)));
             }
         }
     }
-}
-
-public class Appointment
-{
-    public string AppointmentId { get; set; }
-    public string ServiceName { get; set; }
-    public string CustomerName { get; set; }
-    public string DateTime { get; set; }
-    public string Status { get; set; }
-    public string AssignedStaff { get; set; }
 }

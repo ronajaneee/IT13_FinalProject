@@ -1,0 +1,27 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IT13_FinalProject.PaymentHistoryPage"
+             Title="Payment History">
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="18">
+            <Label Text="Payment History" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" />
+            <CollectionView x:Name="HistoryCollectionView">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BackgroundColor="#2D3748" CornerRadius="12" Padding="12" Margin="0,0,0,12">
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="{Binding PaymentDate}" FontSize="14" TextColor="#999" />
+                                <Label Text="{Binding CustomerName}" FontSize="16" FontAttributes="Bold" TextColor="White" />
+                                <Label Text="Service: {Binding ServiceName}" FontSize="14" TextColor="#ccc" />
+                                <Label Text="Amount: {Binding Amount, StringFormat='${0:F2}'}" FontSize="14" TextColor="#FFB84B" />
+                                <Label Text="Method: {Binding PaymentMethod}" FontSize="14" TextColor="WhiteSmoke" />
+                                <Label Text="Status: {Binding Status}" FontSize="12" TextColor="#4BCB4B" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button Text="Close" Clicked="OnCloseClicked" BackgroundColor="#4B91FF" TextColor="White" CornerRadius="8" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

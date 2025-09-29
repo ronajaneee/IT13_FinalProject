@@ -4,7 +4,7 @@ namespace IT13_FinalProject;
 
 public partial class AdminPage : ContentPage, INotifyPropertyChanged
 {
-    public event PropertyChangedEventHandler? PropertyChanged;
+    public new event PropertyChangedEventHandler? PropertyChanged;
 
     private bool isSidebarExpanded = false;
     private bool sidebarLabelVisible = false;
@@ -50,10 +50,16 @@ public partial class AdminPage : ContentPage, INotifyPropertyChanged
         if (Sidebar != null)
             Sidebar.WidthRequest = SidebarWidth;
 
+        // Role-based access check
+        if (UserSession.Role != "Admin")
+        {
+            // Redirect staff to staff dashboard
+            Application.Current.MainPage = new NavigationPage(new StaffPage());
+            return;
+        }
+
         // Show dashboard by default
         MainContent.Content = new DashboardView();
-
-        // Set Dashboard as active on load
         SetActiveButton(BtnDashboard);
     }
 
@@ -71,7 +77,6 @@ public partial class AdminPage : ContentPage, INotifyPropertyChanged
     {
         if (sender is Button clickedButton)
         {
-            // Change main content based on button text
             switch (clickedButton.Text)
             {
                 case "Dashboard":
@@ -90,7 +95,7 @@ public partial class AdminPage : ContentPage, INotifyPropertyChanged
                     MainContent.Content = new AppointmentManagementView();
                     break;
                 case "Payments":
-                    MainContent.Content = new PaymentManagementView();
+                    MainContent.Content = new PaymentManagementPage().Content;
                     break;
                 case "Reports":
                     MainContent.Content = new ReportAnalyticsView();

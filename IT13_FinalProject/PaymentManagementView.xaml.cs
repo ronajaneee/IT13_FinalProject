@@ -1,51 +1,74 @@
+using Microsoft.Maui.Controls;
 using System.Collections.ObjectModel;
 
 namespace IT13_FinalProject;
 
 public partial class PaymentManagementView : ContentView
 {
+    private ObservableCollection<Payment> _allPayments = new();
     public ObservableCollection<Payment> Payments { get; set; } = new();
 
     public PaymentManagementView()
     {
+        // Ensure the XAML file exists and is named PaymentManagementView.xaml
+        // The class must be declared as 'partial' and match the x:Class in XAML
         InitializeComponent();
 
         // Hardcoded payments
-        Payments.Add(new Payment { PaymentId = "P001", CustomerName = "Alice Smith", AppointmentId = "A100", Amount = 50.00m, Method = "Cash", Date = "2025-08-01" });
-        Payments.Add(new Payment { PaymentId = "P002", CustomerName = "Bob Johnson", AppointmentId = "A101", Amount = 35.00m, Method = "E-Wallet", Date = "2025-08-02" });
-        Payments.Add(new Payment { PaymentId = "P003", CustomerName = "Carol Lee", AppointmentId = "A102", Amount = 40.00m, Method = "Card", Date = "2025-08-03" });
+        _allPayments.Add(new Payment { PaymentId = "P001", CustomerName = "Alice Smith", ServiceName = "Haircut", AppointmentId = "A100", Amount = 50.00m, PaymentMethod = "Cash", PaymentDate = "2025-08-01", Status = "Paid" });
+        _allPayments.Add(new Payment { PaymentId = "P002", CustomerName = "Bob Johnson", ServiceName = "Massage", AppointmentId = "A101", Amount = 35.00m, PaymentMethod = "E-Wallet", PaymentDate = "2025-08-02", Status = "Pending" });
+        _allPayments.Add(new Payment { PaymentId = "P003", CustomerName = "Carol Lee", ServiceName = "Facial", AppointmentId = "A102", Amount = 40.00m, PaymentMethod = "Card", PaymentDate = "2025-08-03", Status = "Paid" });
+
+        foreach (var p in _allPayments)
+            Payments.Add(p);
 
         BindingContext = this;
+
+        // Listen for new payments
+        MessagingCenter.Subscribe<AddPaymentPage, Payment>(this, "PaymentAdded", (sender, payment) =>
+        {
+            Payments.Add(payment);
+            _allPayments.Add(payment);
+        });
+        // Listen for edited payments
+        MessagingCenter.Subscribe<EditPaymentPage, Payment>(this, "PaymentEdited", (sender, payment) =>
+        {
+            // Refresh list
+            Payments.Clear();
+            foreach (var p in _allPayments)
+                Payments.Add(p);
+        });
     }
 
     private async void OnAddPaymentClicked(object sender, EventArgs e)
     {
-        // Simple prompt-based payment entry (for demo)
-        string customer = await Application.Current.MainPage.DisplayPromptAsync("Record Payment", "Customer name:");
-        string appointment = await Application.Current.MainPage.DisplayPromptAsync("Record Payment", "Appointment ID:");
-        string amountStr = await Application.Current.MainPage.DisplayPromptAsync("Record Payment", "Amount:", keyboard: Keyboard.Numeric);
-        string method = await Application.Current.MainPage.DisplayActionSheet("Payment Method", "Cancel", null, "Cash", "Card", "E-Wallet");
-
-        if (!string.IsNullOrEmpty(customer) && !string.IsNullOrEmpty(amountStr) && decimal.TryParse(amountStr, out var amount))
-        {
-            var id = "P" + (Payments.Count + 1).ToString("D3");
-            Payments.Add(new Payment { PaymentId = id, CustomerName = customer, AppointmentId = appointment, Amount = amount, Method = method, Date = DateTime.Now.ToString("yyyy-MM-dd") });
-        }
+        await Application.Current.MainPage.Navigation.PushAsync(new AddPaymentPage());
     }
 
-    private void OnEditPaymentClicked(object sender, EventArgs e)
+    private async void OnEditPaymentClicked(object sender, EventArgs e)
     {
         if (sender is Button btn && btn.BindingContext is Payment p)
         {
-            p.CustomerName += " (Edited)";
+            if (p.Status != "Pending")
+            {
+                await Application.Current.MainPage.DisplayAlert("Edit Not Allowed", "Only pending payments can be edited.", "OK");
+                return;
+            }
+            // Navigate to EditPaymentPage, passing the payment to edit
+            await Application.Current.MainPage.Navigation.PushAsync(new EditPaymentPage(p));
         }
     }
 
-    private void OnDeletePaymentClicked(object sender, EventArgs e)
+    private async void OnDeletePaymentClicked(object sender, EventArgs e)
     {
         if (sender is Button btn && btn.BindingContext is Payment p)
         {
-            Payments.Remove(p);
+            bool confirm = await Application.Current.MainPage.DisplayAlert("Delete Payment", "Are you sure you want to delete this payment?", "Yes", "No");
+            if (confirm)
+            {
+                Payments.Remove(p);
+                _allPayments.Remove(p);
+            }
         }
     }
 
@@ -53,7 +76,7 @@ public partial class PaymentManagementView : ContentView
     {
         if (sender is Button btn && btn.BindingContext is Payment p)
         {
-            await Application.Current.MainPage.DisplayAlert($"Receipt {p.PaymentId}", $"Customer: {p.CustomerName}\nAmount: ${p.Amount:F2}\nMethod: {p.Method}\nDate: {p.Date}", "OK");
+            await Application.Current.MainPage.Navigation.PushAsync(new ReceiptPage(p));
         }
     }
 
@@ -61,20 +84,33 @@ public partial class PaymentManagementView : ContentView
     {
         if (sender is Button btn && btn.BindingContext is Payment p)
         {
-            // For demo: show the billing history by appointment id
-            var history = Payments.Where(x => x.AppointmentId == p.AppointmentId).ToList();
-            var msg = string.Join("\n", history.Select(h => $"{h.Date}: {h.CustomerName} - ${h.Amount:F2} ({h.Method})"));
-            await Application.Current.MainPage.DisplayAlert($"Billing History for {p.AppointmentId}", msg, "OK");
+            var history = _allPayments.Where(x => x.AppointmentId == p.AppointmentId).ToList();
+            await Application.Current.MainPage.Navigation.PushAsync(new PaymentHistoryPage(history));
+        }
+    }
+
+    private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+    {
+        var query = e.NewTextValue?.ToLower() ?? "";
+        Payments.Clear();
+        foreach (var p in _allPayments)
+        {
+            if (p.CustomerName.ToLower().Contains(query) || p.ServiceName.ToLower().Contains(query))
+                Payments.Add(p);
         }
     }
 }
 
 public class Payment
 {
-    public string PaymentId { get; set; }
-    public string CustomerName { get; set; }
-    public string AppointmentId { get; set; }
+    public string PaymentId { get; set; } = string.Empty;
+    public string CustomerName { get; set; } = string.Empty;
+    public string ServiceName { get; set; } = string.Empty;
+    public string AppointmentId { get; set; } = string.Empty;
     public decimal Amount { get; set; }
-    public string Method { get; set; }
-    public string Date { get; set; }
+    public string PaymentMethod { get; set; } = string.Empty;
+    public string Method { get; set; } = string.Empty; // For legacy compatibility
+    public string PaymentDate { get; set; } = string.Empty;
+    public string Date { get; set; } = string.Empty; // For legacy compatibility
+    public string Status { get; set; } = "Paid";
 }
