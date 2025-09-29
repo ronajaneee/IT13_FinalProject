@@ -1,0 +1,11 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IT13_FinalProject.PaymentConfirmationPage"
+             Title="Payment Confirmation">
+    <VerticalStackLayout Padding="24" Spacing="18">
+        <Label x:Name="MethodLabel" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center" />
+        <Entry x:Name="AccountEntry" Placeholder="Account/Card/Wallet Number" />
+        <Entry x:Name="PinEntry" Placeholder="PIN/Expiry Date" />
+        <Button Text="Confirm Payment" Clicked="OnConfirmPaymentClicked" BackgroundColor="#4BCB4B" TextColor="White" CornerRadius="8" />
+    </VerticalStackLayout>
+</ContentPage>

@@ -1,0 +1,14 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IT13_FinalProject.AppointmentDetailsPage"
+             Title="Appointment Details">
+    <VerticalStackLayout Padding="24" Spacing="18">
+        <Label x:Name="IdLabel" Text="" FontSize="18" TextColor="#FFB84B" />
+        <Label x:Name="CustomerLabel" Text="" FontSize="18" TextColor="White" />
+        <Label x:Name="ServiceLabel" Text="" FontSize="18" TextColor="WhiteSmoke" />
+        <Label x:Name="StaffLabel" Text="" FontSize="18" TextColor="#4B91FF" />
+        <Label x:Name="DateLabel" Text="" FontSize="18" TextColor="#FFB84B" />
+        <Label x:Name="StatusLabel" Text="" FontSize="18" TextColor="WhiteSmoke" />
+        <Button Text="Back" BackgroundColor="#FF4B91" TextColor="White" CornerRadius="8" Clicked="OnBackClicked" />
+    </VerticalStackLayout>
+</ContentPage>

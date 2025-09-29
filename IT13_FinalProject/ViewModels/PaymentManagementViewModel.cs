@@ -5,6 +5,7 @@ using System.Windows.Input;
 using CommunityToolkit.Maui.Views;
 using System;
 using System.Linq;
+using IT13_FinalProject; // For UserSession and Payment
 
 namespace IT13_FinalProject.ViewModels
 {
@@ -36,46 +37,49 @@ namespace IT13_FinalProject.ViewModels
             // Initialize with sample data
             _allPayments = new ObservableCollection<Payment>
             {
-                new Payment { PaymentId = 1, CustomerName = "Alice Smith", ServiceName = "Haircut", Amount = 50.00m, PaymentMethod = "Cash", PaymentDate = new DateTime(2025, 8, 1), Status = "Paid" },
-                new Payment { PaymentId = 2, CustomerName = "Bob Johnson", ServiceName = "Massage", Amount = 35.00m, PaymentMethod = "E-Wallet", PaymentDate = new DateTime(2025, 8, 2), Status = "Pending" },
-                new Payment { PaymentId = 3, CustomerName = "Carol Lee", ServiceName = "Facial", Amount = 40.00m, PaymentMethod = "Card", PaymentDate = new DateTime(2025, 8, 3), Status = "Paid" }
+                new Payment { PaymentId = "P001", CustomerName = "Alice Smith", ServiceName = "Haircut", AppointmentId = "A100", Amount = 50.00m, PaymentMethod = "Cash", PaymentDate = "2025-08-01", Status = "Paid" },
+                new Payment { PaymentId = "P002", CustomerName = "Bob Johnson", ServiceName = "Massage", AppointmentId = "A101", Amount = 35.00m, PaymentMethod = "E-Wallet", PaymentDate = "2025-08-02", Status = "Pending" },
+                new Payment { PaymentId = "P003", CustomerName = "Carol Lee", ServiceName = "Facial", AppointmentId = "A102", Amount = 40.00m, PaymentMethod = "Card", PaymentDate = "2025-08-03", Status = "Paid" }
             };
 
             Payments = new ObservableCollection<Payment>(_allPayments);
 
             AddPaymentCommand = new Command(() =>
             {
-                var modal = new AddPaymentModal(payment =>
+                if (UserSession.Role == "Staff" || UserSession.Role == "Admin")
                 {
-                    _allPayments.Add(payment);
-                    Payments.Add(payment);
-                });
-                Application.Current?.MainPage?.ShowPopup(modal);
+                    var page = new AddPaymentPage();
+                    Application.Current?.MainPage?.Navigation.PushAsync(page);
+                }
+                else
+                {
+                    Application.Current?.MainPage?.DisplayAlert("Access Denied", "You do not have permission to add payments.", "OK");
+                }
             });
 
             EditPaymentCommand = new Command<Payment>(payment =>
             {
+                if (UserSession.Role != "Admin")
+                {
+                    Application.Current?.MainPage?.DisplayAlert("Access Denied", "Only Admin can edit payments.", "OK");
+                    return;
+                }
                 if (payment?.Status != "Pending")
                 {
                     Application.Current?.MainPage?.DisplayAlert("Edit Not Allowed", "Only pending payments can be edited.", "OK");
                     return;
                 }
-                var modal = new EditPaymentModal(payment, editedPayment =>
-                {
-                    var index = Payments.IndexOf(payment);
-                    if (index >= 0)
-                    {
-                        Payments[index] = editedPayment;
-                        var allIndex = _allPayments.IndexOf(payment);
-                        if (allIndex >= 0)
-                            _allPayments[allIndex] = editedPayment;
-                    }
-                });
-                Application.Current?.MainPage?.ShowPopup(modal);
+                var page = new EditPaymentPage(payment);
+                Application.Current?.MainPage?.Navigation.PushAsync(page);
             });
 
             DeletePaymentCommand = new Command<Payment>(async payment =>
             {
+                if (UserSession.Role != "Admin")
+                {
+                    await Application.Current.MainPage.DisplayAlert("Access Denied", "Only Admin can delete payments.", "OK");
+                    return;
+                }
                 if (payment == null) return;
                 bool confirm = await Application.Current.MainPage.DisplayAlert(
                     "Delete Payment",
@@ -91,16 +95,16 @@ namespace IT13_FinalProject.ViewModels
             ViewReceiptCommand = new Command<Payment>(payment =>
             {
                 if (payment == null) return;
-                var modal = new ReceiptModal(payment);
-                Application.Current?.MainPage?.ShowPopup(modal);
+                var page = new ReceiptPage(payment);
+                Application.Current?.MainPage?.Navigation.PushAsync(page);
             });
 
             ViewHistoryCommand = new Command<Payment>(payment =>
             {
                 if (payment == null) return;
                 var history = _allPayments.Where(x => x.CustomerName == payment.CustomerName).ToList();
-                var modal = new PaymentHistoryModal(history);
-                Application.Current?.MainPage?.ShowPopup(modal);
+                var page = new PaymentHistoryPage(history);
+                Application.Current?.MainPage?.Navigation.PushAsync(page);
             });
         }
 

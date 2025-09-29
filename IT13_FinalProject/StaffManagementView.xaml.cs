@@ -1,5 +1,5 @@
 using Microsoft.Maui.Controls;
-using IT13_FinalProject.ViewModels;
+
 namespace IT13_FinalProject;
 
 public partial class StaffManagementView : ContentView
@@ -11,5 +11,11 @@ public partial class StaffManagementView : ContentView
         InitializeComponent();
         _viewModel = new StaffManagementViewModel();
         BindingContext = _viewModel;
+
+        // Subscribe to staff add event
+        MessagingCenter.Subscribe<AddStaffPage, Staff>(this, "AddStaff", (sender, staff) =>
+        {
+            _viewModel.StaffList.Add(staff);
+        });
     }
 }

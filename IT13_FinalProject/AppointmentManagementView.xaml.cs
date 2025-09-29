@@ -2,8 +2,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using Microsoft.Maui.Controls;
-using CommunityToolkit.Maui.Views;
-using IT13_FinalProject;
+using IT13_FinalProject; // Use the model from Models/Appointment.cs
 
 namespace IT13_FinalProject;
 
@@ -16,6 +15,8 @@ public partial class AppointmentManagementView : ContentView, INotifyPropertyCha
     public AppointmentManagementView()
     {
         InitializeComponent();
+
+        // Hardcoded example appointments
         Appointments.Add(new Appointment {
             AppointmentId = "A1001",
             CustomerName = "Anna Smith",
@@ -67,32 +68,30 @@ public partial class AppointmentManagementView : ContentView, INotifyPropertyCha
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FilteredAppointments)));
     }
 
-    private void OnAddAppointmentClicked(object sender, EventArgs e)
+    private async void OnAddAppointmentClicked(object sender, EventArgs e)
     {
-        var modal = new AddAppointmentModal(Appointments, FilteredAppointments);
-        Application.Current.MainPage.ShowPopup(modal);
+        // Staff and Admin can add
+        await Application.Current.MainPage.Navigation.PushAsync(new AddAppointmentPage(Appointments, FilteredAppointments));
     }
 
-    private void OnEditAppointmentClicked(object sender, EventArgs e)
+    private async void OnEditAppointmentClicked(object sender, EventArgs e)
     {
         if (UserSession.Role == "Staff")
         {
-            Application.Current.MainPage.DisplayAlert("Access Denied", "Staff can only update status, not edit full details.", "OK");
+            await Application.Current.MainPage.DisplayAlert("Access Denied", "Staff can only update status, not edit full details.", "OK");
             return;
         }
         if (sender is Button btn && btn.BindingContext is Appointment appt)
         {
-            var modal = new EditAppointmentModal(appt);
-            Application.Current.MainPage.ShowPopup(modal);
+            await Application.Current.MainPage.Navigation.PushAsync(new EditAppointmentPage(appt));
         }
     }
 
-    private void OnViewDetailsClicked(object sender, EventArgs e)
+    private async void OnViewDetailsClicked(object sender, EventArgs e)
     {
         if (sender is Button btn && btn.BindingContext is Appointment appt)
         {
-            var modal = new ViewAppointmentModal(appt);
-            Application.Current.MainPage.ShowPopup(modal);
+            await Application.Current.MainPage.Navigation.PushAsync(new AppointmentDetailsPage(appt));
         }
     }
 
@@ -119,6 +118,7 @@ public partial class AppointmentManagementView : ContentView, INotifyPropertyCha
 
     private async void OnStatusUpdateClicked(object sender, EventArgs e)
     {
+        // Both Admin and Staff can update status
         if (sender is Button btn && btn.BindingContext is Appointment appt)
         {
             string newStatus = await Application.Current.MainPage.DisplayActionSheet(

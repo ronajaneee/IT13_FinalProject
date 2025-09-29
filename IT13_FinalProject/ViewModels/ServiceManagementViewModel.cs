@@ -36,8 +36,8 @@ namespace IT13_FinalProject.ViewModels
                 }
                 var page = Application.Current?.MainPage;
                 if (page == null) return;
-                var modal = new AddServiceModal(Services, FilteredServices);
-                page.ShowPopup(modal);
+                var modal = new AddServicePage(Services, FilteredServices); // Use AddServicePage instead of AddServiceModal
+                page.Navigation.PushAsync(modal); // Use Navigation.PushAsync for page
             });
 
             EditServiceCommand = new Command<Service>(service =>
@@ -50,8 +50,8 @@ namespace IT13_FinalProject.ViewModels
                 if (service == null) return;
                 var page = Application.Current?.MainPage;
                 if (page == null) return;
-                var modal = new EditServiceModal(service);
-                page.ShowPopup(modal);
+                var modal = new EditServicePage(service); // Use EditServicePage instead of EditServiceModal
+                page.Navigation.PushAsync(modal); // Use Navigation.PushAsync for page
             });
 
             DeleteServiceCommand = new Command<Service>(async service =>
@@ -79,8 +79,8 @@ namespace IT13_FinalProject.ViewModels
                 if (service == null) return;
                 var page = Application.Current?.MainPage;
                 if (page == null) return;
-                var modal = new ViewServiceModal(service);
-                page.ShowPopup(modal);
+                var modal = new ServiceDetailsPage(service); // Use ServiceDetailsPage instead of ViewServiceModal
+                page.Navigation.PushAsync(modal); // Use Navigation.PushAsync for page
             });
         }
 

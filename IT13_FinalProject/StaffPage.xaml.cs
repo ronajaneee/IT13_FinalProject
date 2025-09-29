@@ -1,16 +1,15 @@
 using System.ComponentModel;
+using Microsoft.Maui.Controls;
 
 namespace IT13_FinalProject;
 
-public partial class AdminPage : ContentPage, INotifyPropertyChanged
+public partial class StaffPage : ContentPage, INotifyPropertyChanged
 {
     public new event PropertyChangedEventHandler? PropertyChanged;
 
     private bool isSidebarExpanded = false;
     private bool sidebarLabelVisible = false;
     private double sidebarWidth = 40;
-
-    // Track the currently active button
     private Button _activeButton;
 
     public bool SidebarLabelVisible
@@ -35,30 +34,18 @@ public partial class AdminPage : ContentPage, INotifyPropertyChanged
             {
                 sidebarWidth = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SidebarWidth)));
-                if (Sidebar != null)
-                    Sidebar.WidthRequest = sidebarWidth;
+                Sidebar.WidthRequest = sidebarWidth;
             }
         }
     }
 
-    public AdminPage()
+    public StaffPage()
     {
         InitializeComponent();
         BindingContext = this;
         SidebarWidth = 40;
         SidebarLabelVisible = false;
-        if (Sidebar != null)
-            Sidebar.WidthRequest = SidebarWidth;
-
-        // Role-based access check
-        if (UserSession.Role != "Admin")
-        {
-            // Redirect staff to staff dashboard
-            Application.Current.MainPage = new NavigationPage(new StaffPage());
-            return;
-        }
-
-        // Show dashboard by default
+        Sidebar.WidthRequest = SidebarWidth;
         MainContent.Content = new DashboardView();
         SetActiveButton(BtnDashboard);
     }
@@ -68,11 +55,9 @@ public partial class AdminPage : ContentPage, INotifyPropertyChanged
         isSidebarExpanded = !isSidebarExpanded;
         SidebarWidth = isSidebarExpanded ? 220 : 40;
         SidebarLabelVisible = isSidebarExpanded;
-        if (Sidebar != null)
-            Sidebar.WidthRequest = SidebarWidth;
+        Sidebar.WidthRequest = SidebarWidth;
     }
 
-    // Unified click handler for all nav buttons
     private void OnNavButtonClicked(object sender, EventArgs e)
     {
         if (sender is Button clickedButton)
@@ -85,9 +70,6 @@ public partial class AdminPage : ContentPage, INotifyPropertyChanged
                 case "Customers":
                     MainContent.Content = new CustomerManagementView();
                     break;
-                case "Staff":
-                    MainContent.Content = new StaffManagementView();
-                    break;
                 case "Services":
                     MainContent.Content = new ServiceManagementView();
                     break;
@@ -97,32 +79,29 @@ public partial class AdminPage : ContentPage, INotifyPropertyChanged
                 case "Payments":
                     MainContent.Content = new PaymentManagementPage().Content;
                     break;
-                case "Reports":
-                    MainContent.Content = new ReportAnalyticsView();
-                    break;
                 case "Settings":
                     MainContent.Content = new SettingsView();
                     break;
             }
-
-            // Highlight the active button
             SetActiveButton(clickedButton);
         }
     }
 
+    private void OnLogoutClicked(object sender, EventArgs e)
+    {
+        UserSession.Clear();
+        Application.Current.MainPage = new NavigationPage(new LoginPage());
+    }
+
     private void SetActiveButton(Button newActiveButton)
     {
-        // Reset previous active button
         if (_activeButton != null)
         {
             _activeButton.BackgroundColor = Colors.Transparent;
             _activeButton.TextColor = Color.FromArgb("#ccc");
         }
-
-        // Set new active button
-        newActiveButton.BackgroundColor = Color.FromArgb("#3b82f6"); // Blue active
+        newActiveButton.BackgroundColor = Color.FromArgb("#3b82f6");
         newActiveButton.TextColor = Colors.White;
-
         _activeButton = newActiveButton;
     }
 }

@@ -56,7 +56,7 @@ public partial class LoginPage : ContentPage
             if (user.Role == "Admin")
                 Application.Current.MainPage = new NavigationPage(new AdminPage());
             else if (user.Role == "Staff")
-                Application.Current.MainPage = new NavigationPage(new ContentPage { Content = new StaffManagementView() });
+                Application.Current.MainPage = new NavigationPage(new StaffPage());
         }
         else
         {

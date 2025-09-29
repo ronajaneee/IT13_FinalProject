@@ -1,0 +1,42 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IT13_FinalProject.AddPaymentPage"
+             Title="Add Payment">
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="18">
+            <Label Text="Add New Payment" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" />
+            <Entry x:Name="CustomerNameEntry" Placeholder="Customer Name" />
+            <Entry x:Name="ServiceNameEntry" Placeholder="Service Name" />
+            <Entry x:Name="AppointmentIdEntry" Placeholder="Appointment ID" />
+            <Entry x:Name="AmountEntry" Placeholder="Amount" Keyboard="Numeric" />
+            <Picker x:Name="PaymentMethodPicker" Title="Payment Method" SelectedIndexChanged="OnPaymentMethodChanged">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Cash</x:String>
+                        <x:String>Card</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+            <!-- Card Payment Form -->
+            <VerticalStackLayout x:Name="CardForm" IsVisible="False" Spacing="12" Padding="0,10,0,0">
+                <Entry x:Name="CardholderNameEntry" Placeholder="Cardholder Name" />
+                <Entry x:Name="CardNumberEntry" Placeholder="Card Number (16 digits)" Keyboard="Numeric" MaxLength="16" />
+                <Entry x:Name="ExpirationEntry" Placeholder="Expiration Date (MM/YY)" MaxLength="5" />
+                <Entry x:Name="CVVEntry" Placeholder="CVV (3 digits)" Keyboard="Numeric" MaxLength="3" />
+            </VerticalStackLayout>
+            <DatePicker x:Name="PaymentDatePicker" />
+            <Picker x:Name="StatusPicker" Title="Status">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Paid</x:String>
+                        <x:String>Pending</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+            <HorizontalStackLayout Spacing="12" HorizontalOptions="Center">
+                <Button Text="Confirm" Clicked="OnConfirmClicked" BackgroundColor="#4BCB4B" TextColor="White" CornerRadius="8" HeightRequest="44" FontSize="16" Padding="16,0" WidthRequest="140" />
+                <Button Text="Cancel" Clicked="OnCancelClicked" BackgroundColor="#FF4B91" TextColor="White" CornerRadius="8" HeightRequest="44" FontSize="16" Padding="16,0" WidthRequest="140" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,8 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Microsoft.Maui.Controls;
-using CommunityToolkit.Maui.Views;
-using System;
 
 namespace IT13_FinalProject
 {
@@ -85,29 +83,31 @@ namespace IT13_FinalProject
                 }
             };
 
-            AddStaffCommand = new Command(() => {
-                var page = Application.Current?.MainPage;
-                if (page == null) return;
-                var modal = new AddStaffModal(staff =>
+            AddStaffCommand = new Command(async () => {
+                try
                 {
-                    StaffList.Add(staff);
-                });
-                page.ShowPopup(modal);
+                    var addStaffPage = new AddStaffPage();
+                    await Application.Current.MainPage.Navigation.PushAsync(addStaffPage);
+                }
+                catch (Exception ex)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", $"Could not open Add Staff page: {ex.Message}", "OK");
+                }
             });
 
-            EditStaffCommand = new Command<Staff>((staff) => {
-                if (staff == null) return;
-                var page = Application.Current?.MainPage;
-                if (page == null) return;
-                var modal = new EditStaffModal(staff, editedStaff =>
+            EditStaffCommand = new Command<Staff>(async (staff) => {
+                try
                 {
-                    var index = StaffList.IndexOf(staff);
-                    if (index >= 0)
+                    if (staff != null)
                     {
-                        StaffList[index] = editedStaff;
+                        var editStaffPage = new EditStaffPage(staff);
+                        await Application.Current.MainPage.Navigation.PushAsync(editStaffPage);
                     }
-                });
-                page.ShowPopup(modal);
+                }
+                catch (Exception ex)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", $"Could not open Edit Staff page: {ex.Message}", "OK");
+                }
             });
 
             DeleteStaffCommand = new Command<Staff>(async (staff) => {
@@ -133,12 +133,19 @@ namespace IT13_FinalProject
                 }
             });
 
-            ViewStaffCommand = new Command<Staff>((staff) => {
-                if (staff == null) return;
-                var page = Application.Current?.MainPage;
-                if (page == null) return;
-                var modal = new ViewStaffModal(staff);
-                page.ShowPopup(modal);
+            ViewStaffCommand = new Command<Staff>(async (staff) => {
+                try
+                {
+                    if (staff != null)
+                    {
+                        var staffDetailsPage = new StaffDetailsPage(staff);
+                        await Application.Current.MainPage.Navigation.PushAsync(staffDetailsPage);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", $"Could not view staff details: {ex.Message}", "OK");
+                }
             });
         }
     }

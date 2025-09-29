@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IT13_FinalProject.AddServicePage"
+             Title="Add Service">
+    <VerticalStackLayout Padding="24" Spacing="18">
+        <Label Text="Add New Service" FontSize="28" FontAttributes="Bold" TextColor="#1e2445" HorizontalOptions="Center" />
+        <Entry x:Name="NameEntry" Placeholder="Service Name" />
+        <Entry x:Name="DescriptionEntry" Placeholder="Description" />
+        <Entry x:Name="PriceEntry" Placeholder="Price" Keyboard="Numeric" />
+        <Entry x:Name="DurationEntry" Placeholder="Duration (e.g., 60 mins)" />
+        <HorizontalStackLayout Spacing="12" HorizontalOptions="Center">
+            <Button Text="Save" BackgroundColor="#4BCB4B" TextColor="White" CornerRadius="8" HeightRequest="44" FontSize="16" Padding="16,0" WidthRequest="140" Clicked="OnSaveClicked" />
+            <Button Text="Cancel" BackgroundColor="#FF4B91" TextColor="White" CornerRadius="8" HeightRequest="44" FontSize="16" Padding="16,0" WidthRequest="140" Clicked="OnCancelClicked" />
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>
